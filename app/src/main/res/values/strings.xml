@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DevCorner</string>
+    <string name="login">LOGIN</string>
+    <string name="signIn">SIGN IN</string>
+    <string name="create">Create account</string>
+    <string name="passwordHint">Enter your password</string>
+    <string name="loginHint">Enter your login</string>
+    <string name="title_activity_home_page">Home</string>
+    <string name="author_filter">Author:</string>
+    <string name="group_filter">Group:</string>
+    <string name="title_activity_home">Home</string>
+</resources>
