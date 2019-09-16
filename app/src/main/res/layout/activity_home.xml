@@ -7,6 +7,7 @@
     tools:context=".Home">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,7 +20,7 @@
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="false"
             android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/appBarLayout2"
@@ -49,37 +50,22 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/white"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:itemIconTint="@drawable/bottom_navigation_item_background_colors"
-            app:itemTextColor="@drawable/bottom_navigation_item_background_colors"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_navigation"
-            tools:ignore="MissingConstraints" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:layout_marginEnd="64dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:onClick="openPageForNewExercise"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:icon="@drawable/ic_add_black_24dp"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addExercise"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="openPageForNewExercise"
+        android:src="@drawable/ic_add_black_24dp"
+        app:icon="@drawable/ic_add_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardsLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

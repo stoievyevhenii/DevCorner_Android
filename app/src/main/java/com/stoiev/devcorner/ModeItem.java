@@ -8,7 +8,7 @@ class ModeItem {
     private String group;
     private String author;
 
-    public ModeItem(String title, String group, String author) {
+    private ModeItem(String title, String group, String author) {
         this.title = title;
         this.group = group;
         this.author = author;
@@ -43,3 +43,5 @@ class ModeItem {
         return itemsList;
     }
 }
+
+

@@ -3,8 +3,8 @@
     <string name="login">LOGIN</string>
     <string name="signIn">SIGN IN</string>
     <string name="create">Create account</string>
-    <string name="passwordHint">Enter your password</string>
-    <string name="loginHint">Enter your login</string>
+    <string name="passwordHint">Enter your password…</string>
+    <string name="loginHint">Enter your login…</string>
     <string name="title_activity_home_page">Home</string>
     <string name="author_filter">Author:</string>
     <string name="group_filter">Group:</string>
@@ -13,4 +13,11 @@
     <string name="bottom_navigation_add">Add</string>
     <string name="bottom_navigation_account">Account</string>
     <string name="title_activity_new_exercise">Add new exercise</string>
+    <string name="newExerciseContentHint">Paste your exercise text…</string>
+    <string name="newExerciseContentHeader">Your exercise title…</string>
+    <string name="newExerciseBtn">Add</string>
+
+    //Menu items
+    <string name="menuSettings">Settings</string>
+    <string name="menuAccount">Account</string>
 </resources>

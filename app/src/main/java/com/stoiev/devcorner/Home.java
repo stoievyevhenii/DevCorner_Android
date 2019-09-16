@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -47,7 +49,7 @@ public class Home extends AppCompatActivity {
 
         // FAB scroll effect
         RecyclerView mRecyclerView = findViewById(R.id.cardsLayout);
-        final FloatingActionButton mFloatingActionButton = findViewById(R.id.fab);
+        final FloatingActionButton mFloatingActionButton = findViewById(R.id.addExercise);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -60,6 +62,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_items, menu);
+        return true;
     }
 
     @Override
