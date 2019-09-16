@@ -9,4 +9,8 @@
     <string name="author_filter">Author:</string>
     <string name="group_filter">Group:</string>
     <string name="title_activity_home">Home</string>
+    <string name="bottom_navigation_home">Home</string>
+    <string name="bottom_navigation_add">Add</string>
+    <string name="bottom_navigation_account">Account</string>
+    <string name="title_activity_new_exercise">Add new exercise</string>
 </resources>

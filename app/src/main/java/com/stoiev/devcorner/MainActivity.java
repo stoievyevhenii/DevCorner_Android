@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
         LoginData getData = new LoginData();
         // Login data
         EditText loginField = findViewById(R.id.login);
-        String fieldLoginData = loginField.getText().toString();
+        String fieldLoginData = loginField.getText().toString().replace(" ", "");
         String loginData = getData.getLogin();
 
         // Passwd data
         EditText passwdField = findViewById(R.id.passwd);
-        String fieldPasswdData = passwdField.getText().toString();
+        String fieldPasswdData = passwdField.getText().toString().replace(" ", "");
         String passwdData = getData.getPasswd();
 
         // Check login data
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             showMessage("Incorrect login");
         } else if(!fieldPasswdData.equals(passwdData)){
             showMessage("Incorrect password");
-        } else{
+        } else if (!fieldPasswdData.equals(passwdData) && !fieldLoginData.equals(loginData)){
             showMessage("Incorrect login and password");
         }
     }
@@ -64,14 +64,14 @@ class LoginData {
     private String login = "yevheniich";
     private String password = "qwerty";
 
-    public LoginData() {
+    LoginData() {
     }
 
-    public String getLogin() {
+    String getLogin() {
         return login;
     }
 
-    public String getPasswd() {
+    String getPasswd() {
         return password;
     }
 }

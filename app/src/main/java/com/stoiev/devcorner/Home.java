@@ -1,11 +1,10 @@
 package com.stoiev.devcorner;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +25,13 @@ public class Home extends AppCompatActivity {
     private RecyclerView recycleView;
     private LinearLayoutManager verticalLinearLayoutManager;
     private LinearLayoutManager horizontalLinearLayoutManager;
-    private RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.newExerciseToolbar);
         setSupportActionBar(toolbar);
 
         // --- Set layout --- //
@@ -43,9 +41,25 @@ public class Home extends AppCompatActivity {
         horizontalLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         recycleView.setLayoutManager(verticalLinearLayoutManager);
-        adapter = new Home.RecyclerAdapter();
+        RecyclerAdapter adapter = new RecyclerAdapter();
         recycleView.setAdapter(adapter);
         adapter.addAll(ModeItem.getFakeItems());
+
+        // FAB scroll effect
+        RecyclerView mRecyclerView = findViewById(R.id.cardsLayout);
+        final FloatingActionButton mFloatingActionButton = findViewById(R.id.fab);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && mFloatingActionButton.getVisibility() == View.VISIBLE) {
+                    mFloatingActionButton.hide();
+                } else if (dy < 0 && mFloatingActionButton.getVisibility() != View.VISIBLE) {
+                    mFloatingActionButton.show();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -57,14 +71,6 @@ public class Home extends AppCompatActivity {
             recycleView.setLayoutManager(verticalLinearLayoutManager);
         }
 
-    }
-
-    protected void showMessage(View view) {
-        Context context = getApplicationContext();
-        CharSequence messageText = "Work in progress";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, messageText, duration);
-        toast.show();
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<Home.RecyclerViewHolder> {
@@ -113,4 +119,10 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    public void openPageForNewExercise(View view) {
+        Intent addNewExercise = new Intent(this, NewExercise.class);
+        startActivity(addNewExercise);
+    }
+
 }
+

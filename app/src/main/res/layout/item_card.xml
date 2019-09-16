@@ -52,7 +52,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/nonAccent"
+                android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 tools:text="Author name will be here" />
         </LinearLayout>
@@ -77,7 +77,7 @@
                 android:paddingBottom="5dp"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/nonAccent"
                 android:textSize="14sp"
                 tools:text="Group" />
         </LinearLayout>
