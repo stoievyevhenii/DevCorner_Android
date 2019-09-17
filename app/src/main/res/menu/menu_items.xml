@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/settingsItem"
-        android:title="@string/menuSettings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/accountItem"
-        android:title="@string/menuAccount"
-        app:showAsAction="never" />
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menuSettings"
+                android:title="@string/menuAbout"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menuAccount"
+                android:icon="@drawable/ic_account_circle_black_24dp"
+                android:title="@string/menuAccount"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
 
 </menu>

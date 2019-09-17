@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 }
 
 class LoginData {
-    private String login = "yevheniich";
-    private String password = "qwerty";
+    private String login = "1";
+    private String password = "1";
 
     LoginData() {
     }

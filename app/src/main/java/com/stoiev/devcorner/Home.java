@@ -1,10 +1,12 @@
 package com.stoiev.devcorner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ public class Home extends AppCompatActivity {
     private LinearLayoutManager verticalLinearLayoutManager;
     private LinearLayoutManager horizontalLinearLayoutManager;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,6 +69,8 @@ public class Home extends AppCompatActivity {
 
     }
 
+
+    // Dropdown menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -71,6 +78,23 @@ public class Home extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuAccount:
+                openAccountPage(item);
+                return true;
+
+            case R.id.menuSettings:
+                openAboutPage(item);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Layout
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -128,9 +152,21 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    // Pages
     public void openPageForNewExercise(View view) {
         Intent addNewExercise = new Intent(this, NewExercise.class);
         startActivity(addNewExercise);
+    }
+
+    public void openAboutPage(MenuItem menuAction) {
+        Intent openSettings = new Intent(this, About.class);
+        startActivity(openSettings);
+    }
+
+    public void openAccountPage(MenuItem menuAction) {
+        Toast.makeText
+                (getApplicationContext(), "Account page in work, thank's for you patience", Toast.LENGTH_SHORT)
+                .show();
     }
 
 }

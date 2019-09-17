@@ -13,7 +13,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -28,6 +27,11 @@
     <style name="btnTheme" parent="@android:style/Widget.Button">
         <item name="android:textColor">#fff</item>
         <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="PreferenceScreen" parent="AppTheme.NoActionBar">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/nonAccent</item>
     </style>
 
 </resources>

@@ -19,19 +19,19 @@
             android:layout_centerInParent="false"
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="false"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/backgroundColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/appBarLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+            app:layout_constraintStart_toStartOf="@id/settingsToolbar"
+            app:layout_constraintTop_toBottomOf="@+id/settingsToolbar"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/recycler_view_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout2"
+            android:id="@+id/settingsToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
@@ -39,14 +39,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:elevation="0dp"
             tools:ignore="MissingConstraints">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/newExerciseToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:background="@color/colorPrimaryDark"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
