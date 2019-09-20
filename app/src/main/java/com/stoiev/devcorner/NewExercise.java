@@ -84,7 +84,7 @@ public class NewExercise extends AppCompatActivity {
                     // Set the hint text color gray
                     tv.setTextColor(getResources().getColor(R.color.colorAccent));
                 } else {
-                    tv.setTextColor(getResources().getColor(R.color.nonAccent));
+                    tv.setTextColor(getResources().getColor(R.color.gray));
                 }
                 return view;
             }

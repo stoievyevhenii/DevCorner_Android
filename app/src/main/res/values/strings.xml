@@ -6,10 +6,10 @@
     <string name="passwordHint">Enter your password…</string>
     <string name="loginHint">Enter your login…</string>
     <string name="title_activity_home_page">Home</string>
-    <string name="author_filter">Author:</string>
-    <string name="group_filter">Group:</string>
+    <string name="done_btn">Done</string>
     <string name="title_activity_home">Home</string>
     <string name="bottom_navigation_home">Home</string>
+    <string name="exercise_answer_filed">Answer</string>
     <string name="bottom_navigation_add">Add</string>
     <string name="bottom_navigation_account">Account</string>
     <string name="title_activity_new_exercise">Add new exercise</string>

@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +37,7 @@ public class Home extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = findViewById(R.id.newExerciseToolbar);
+        Toolbar toolbar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(toolbar);
 
         // --- Set layout --- //
@@ -52,25 +51,8 @@ public class Home extends AppCompatActivity {
         recycleView.setAdapter(adapter);
         adapter.addAll(ModeItem.getFakeItems());
 
-        // FAB scroll effect
-        RecyclerView mRecyclerView = findViewById(R.id.cardsLayout);
-        final FloatingActionButton mFloatingActionButton = findViewById(R.id.addExercise);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && mFloatingActionButton.getVisibility() == View.VISIBLE) {
-                    mFloatingActionButton.hide();
-                } else if (dy < 0 && mFloatingActionButton.getVisibility() != View.VISIBLE) {
-                    mFloatingActionButton.show();
-                }
-            }
-        });
-
     }
 
-
-    // Dropdown menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -82,11 +64,11 @@ public class Home extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuAccount:
-                openAccountPage(item);
+                openAccountPage();
                 return true;
 
-            case R.id.menuSettings:
-                openAboutPage(item);
+            case R.id.menuAbout:
+                openAboutPage();
                 return true;
 
             default:
@@ -96,7 +78,7 @@ public class Home extends AppCompatActivity {
 
     // Layout
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             recycleView.setLayoutManager(horizontalLinearLayoutManager);
@@ -109,7 +91,7 @@ public class Home extends AppCompatActivity {
     private class RecyclerAdapter extends RecyclerView.Adapter<Home.RecyclerViewHolder> {
         private ArrayList<ModeItem> items = new ArrayList<>();
 
-        public void addAll(List<ModeItem> fakeItems) {
+        void addAll(List<ModeItem> fakeItems) {
             int pos = getItemCount();
             this.items.addAll(fakeItems);
             notifyItemRangeInserted(pos, this.items.size());
@@ -140,7 +122,7 @@ public class Home extends AppCompatActivity {
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.card_title);
             group = itemView.findViewById(R.id.group);
             author = itemView.findViewById(R.id.author);
         }
@@ -158,15 +140,30 @@ public class Home extends AppCompatActivity {
         startActivity(addNewExercise);
     }
 
-    public void openAboutPage(MenuItem menuAction) {
-        Intent openSettings = new Intent(this, About.class);
-        startActivity(openSettings);
+    public void openAboutPage() {
+        Intent openAbout = new Intent(this, About.class);
+        startActivity(openAbout);
     }
 
-    public void openAccountPage(MenuItem menuAction) {
+    public void openAccountPage() {
         Toast.makeText
                 (getApplicationContext(), "Account page in work, thank's for you patience", Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    public void openExercisePage(View view) {
+        TextView cardTitle = view.findViewById(R.id.card_title);
+        String cardTitleContent = cardTitle.getText().toString();
+
+        Intent openExercisePage = new Intent(this, ExercisePage.class);
+
+        Bundle b = new Bundle();
+        b.putString("newTitle", cardTitleContent);
+        openExercisePage.putExtras(b);
+
+        startActivity(openExercisePage);
+
+
     }
 
 }

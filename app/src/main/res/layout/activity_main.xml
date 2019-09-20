@@ -22,7 +22,7 @@
         android:onClick="checkData"
         android:text="@string/signIn"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/createAccount"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +70,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
@@ -88,7 +90,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elegantTextHeight="false"
             android:hint="@string/loginHint"
@@ -97,15 +99,18 @@
             android:paddingBottom="12dp"
             android:selectAllOnFocus="false"
             android:singleLine="true"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
 
         android:id="@+id/passwdField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
@@ -119,7 +124,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwd"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:foregroundGravity="center_vertical|center_horizontal"
             android:hint="@string/passwordHint"
@@ -128,8 +133,9 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:singleLine="true"
-            android:textColor="@color/nonAccent"
-            android:textColorHint="@color/nonAccent" />
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/nonAccent"
+            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
