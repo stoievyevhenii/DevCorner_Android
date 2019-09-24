@@ -1,6 +1,7 @@
 package com.stoiev.devcorner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
@@ -53,25 +54,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMessage(String messageContext){
         Context context = getApplicationContext();
-        CharSequence messageText = messageContext;
         int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, messageText, duration);
+        Toast toast = Toast.makeText(context, messageContext, duration);
         toast.show();
+    }
+
+    public void register(View view) {
+        Intent registerForm = new Intent(this, Register.class);
+        startActivity(registerForm);
     }
 }
 
 class LoginData {
-    private String login = "1";
-    private String password = "1";
 
     LoginData() {
     }
 
     String getLogin() {
-        return login;
+        return "1";
     }
 
     String getPasswd() {
-        return password;
+        return "1";
     }
 }

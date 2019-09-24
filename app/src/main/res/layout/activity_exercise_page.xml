@@ -14,18 +14,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="3dp"
         android:gravity="bottom"
-        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_page_content">
+        app:layout_constraintTop_toBottomOf="@id/exercise_lines">
 
         <Button
             android:id="@+id/button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="54dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@drawable/btn_style"
             android:text="@string/done_btn"
@@ -35,17 +42,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/answerField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="312dp"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="0dp"
             android:textColorHint="@color/nonAccent"
             app:hintAnimationEnabled="true"
             app:passwordToggleTint="@color/colorAccent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/answer"
+                style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -77,17 +84,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/exercise_page_content"
-        layout="@layout/content_exercise_page"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exercise_lines"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercisePageTitle" />
+        app:layout_constraintEnd_toStartOf="@+id/bottom_bar"
+        app:layout_constraintStart_toEndOf="@+id/bottom_bar"
+        app:layout_constraintTop_toBottomOf="@+id/exercisePageTitle"
+        tools:context=".ExercisePage"
+        tools:showIn="@layout/activity_exercise_page">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

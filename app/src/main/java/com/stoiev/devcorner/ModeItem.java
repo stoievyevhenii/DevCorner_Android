@@ -35,11 +35,6 @@ class ModeItem {
         itemsList.add(new ModeItem("Map", "Array", "Nezdoliy Yurii"));
         itemsList.add(new ModeItem("Pointer", "Other", "Borovleva Svetlana"));
         itemsList.add(new ModeItem("Array create", "Array", "Stoiev Yevhenii"));
-        itemsList.add(new ModeItem("DB", "DataBase", "Pasichenko Maksim"));
-        itemsList.add(new ModeItem("DB", "DataBase", "Pasichenko Maksim"));
-        itemsList.add(new ModeItem("DB", "DataBase", "Pasichenko Maksim"));
-        itemsList.add(new ModeItem("DB", "DataBase", "Pasichenko Maksim"));
-        itemsList.add(new ModeItem("DB", "DataBase", "Pasichenko Maksim"));
         return itemsList;
     }
 }

@@ -13,7 +13,6 @@
     android:clickable="false"
     android:focusable="auto"
     android:onClick="openExercisePage"
-    card_view:cardBackgroundColor="@android:color/white"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="2dp"
     card_view:cardPreventCornerOverlap="false"

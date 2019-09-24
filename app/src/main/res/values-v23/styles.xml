@@ -23,8 +23,6 @@
     <style name="ExercisePage" parent="AppTheme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@android:color/white</item>
     </style>
 
     <style name="NewExercisePage" parent="AppTheme">
