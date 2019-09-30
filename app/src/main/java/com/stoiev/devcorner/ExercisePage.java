@@ -41,7 +41,7 @@ public class ExercisePage extends AppCompatActivity {
         recyclerView = findViewById(R.id.exercise_lines);
         verticalLinearLayoutManager = new LinearLayoutManager(this);
 
-//        recyclerView.setLayoutManager(verticalLinearLayoutManager);
+        recyclerView.setLayoutManager(verticalLinearLayoutManager);
         RecyclerAdapter exercise_adapter = new RecyclerAdapter();
         recyclerView.setAdapter(exercise_adapter);
         exercise_adapter.addAll(ExerciseLine.getExerciseLines());
@@ -98,7 +98,7 @@ public class ExercisePage extends AppCompatActivity {
 
         void bind(ExerciseLine linesItem) {
             title.setText(linesItem.getLine());
-            number.setText(linesItem.getNumber());
+            number.setText(Integer.toString(linesItem.getNumber()));
         }
     }
 
