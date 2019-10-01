@@ -51,6 +51,9 @@ public class Home extends AppCompatActivity {
         recycleView.setAdapter(adapter);
         adapter.addAll(ModeItem.getFakeItems());
 
+
+
+
     }
 
     @Override

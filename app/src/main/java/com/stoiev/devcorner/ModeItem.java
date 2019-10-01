@@ -35,6 +35,20 @@ class ModeItem {
         itemsList.add(new ModeItem("Map", "Array", "Nezdoliy Yurii"));
         itemsList.add(new ModeItem("Pointer", "Other", "Borovleva Svetlana"));
         itemsList.add(new ModeItem("Array create", "Array", "Stoiev Yevhenii"));
+        itemsList.add(new ModeItem("Exception", "Error", "Yevhenii Stoiev"));
+        itemsList.add(new ModeItem("Quick Sort", "Sort", "Pasichenko Maksim"));
+        itemsList.add(new ModeItem("Bubble Sort", "Sort", "Kotigrobov Stas"));
+        itemsList.add(new ModeItem("If ... else", "Condition", "Konishev Aleksandr"));
+        itemsList.add(new ModeItem("Map", "Array", "Nezdoliy Yurii"));
+        itemsList.add(new ModeItem("Pointer", "Other", "Borovleva Svetlana"));
+        itemsList.add(new ModeItem("Array create", "Array", "Stoiev Yevhenii"));
+        itemsList.add(new ModeItem("Exception", "Error", "Yevhenii Stoiev"));
+        itemsList.add(new ModeItem("Quick Sort", "Sort", "Pasichenko Maksim"));
+        itemsList.add(new ModeItem("Bubble Sort", "Sort", "Kotigrobov Stas"));
+        itemsList.add(new ModeItem("If ... else", "Condition", "Konishev Aleksandr"));
+        itemsList.add(new ModeItem("Map", "Array", "Nezdoliy Yurii"));
+        itemsList.add(new ModeItem("Pointer", "Other", "Borovleva Svetlana"));
+        itemsList.add(new ModeItem("Array create", "Array", "Stoiev Yevhenii"));
         return itemsList;
     }
 }

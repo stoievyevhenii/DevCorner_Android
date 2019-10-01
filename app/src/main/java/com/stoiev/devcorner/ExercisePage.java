@@ -2,6 +2,7 @@ package com.stoiev.devcorner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,14 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ExercisePage extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private FloatingActionButton fab;
     private LinearLayoutManager verticalLinearLayoutManager;
     private LinearLayoutManager horizontalLinearLayoutManager;
 
@@ -42,9 +50,43 @@ public class ExercisePage extends AppCompatActivity {
         verticalLinearLayoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
-        RecyclerAdapter exercise_adapter = new RecyclerAdapter();
+        final RecyclerAdapter exercise_adapter = new RecyclerAdapter();
         recyclerView.setAdapter(exercise_adapter);
         exercise_adapter.addAll(ExerciseLine.getExerciseLines());
+
+        // --- Hide FAB --- //
+        fab = findViewById(R.id.exerciseFAB);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                    fab.hide();
+                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                    fab.show();
+                }
+            }
+        });
+
+        /////////////////
+        //Drag and drop//
+        /////////////////
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
+
+                int position_dragged = dragged.getAdapterPosition();
+                int position_target = target.getAdapterPosition();
+                Collections.swap(ExerciseLine.getExerciseLines(),position_dragged,position_target);
+                Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(position_dragged, position_target);
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            }
+        });
+        helper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -88,19 +130,18 @@ public class ExercisePage extends AppCompatActivity {
 
     private class RecyclerViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
-        private TextView number;
 
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.exercise_card_title);
-            number = itemView.findViewById(R.id.exercise_card_number);
         }
 
         void bind(ExerciseLine linesItem) {
             title.setText(linesItem.getLine());
-            number.setText(Integer.toString(linesItem.getNumber()));
         }
     }
+
+
 
 }
 

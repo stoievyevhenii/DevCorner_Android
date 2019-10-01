@@ -2,80 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/exerciseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ExercisePage">
-
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:elevation="3dp"
-        android:gravity="bottom|center"
-        android:layoutDirection="rtl"
-        android:orientation="horizontal"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exercise_lines">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_style"
-            android:text="@string/done_btn"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/answerField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="312dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingTop="1dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
-            android:textColorHint="@color/colorAccent"
-            app:boxBackgroundColor="@null"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/colorAccent"
-            app:endIconCheckable="false"
-            app:hintAnimationEnabled="true"
-            app:passwordToggleEnabled="false"
-            app:passwordToggleTint="@color/colorAccent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answer"
-                style="@android:style/Widget.Material.Light.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:elegantTextHeight="false"
-                android:hint="@string/exercise_answer_filed"
-                android:inputType="number"
-                android:maxLines="1"
-                android:selectAllOnFocus="false"
-                android:singleLine="true"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/exercisePageTitle"
@@ -94,23 +27,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercise_lines"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
-        app:layout_constraintEnd_toStartOf="@+id/bottom_bar"
-        app:layout_constraintStart_toEndOf="@+id/bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercisePageTitle"
         tools:context=".ExercisePage"
         tools:showIn="@layout/activity_exercise_page">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/exerciseFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
