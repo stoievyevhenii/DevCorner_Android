@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "524213004760",
+    "firebase_url": "https://devcorner-app.firebaseio.com",
+    "project_id": "devcorner-app",
+    "storage_bucket": "devcorner-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524213004760:android:2f0bf922a009f9d5de2aad",
+        "android_client_info": {
+          "package_name": "com.stoiev.devcorner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524213004760-qkf7i5triptb630bfa6e9c0jb5j6o87p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApWVt2zBM-LvA6ewxw4SQUAhZR-gmzavs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524213004760-qkf7i5triptb630bfa6e9c0jb5j6o87p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
