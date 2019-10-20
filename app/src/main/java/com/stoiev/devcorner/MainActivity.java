@@ -16,10 +16,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    DatabaseHelper userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create local DB//
+        userData = new DatabaseHelper(this);
     }
 
     ///////////

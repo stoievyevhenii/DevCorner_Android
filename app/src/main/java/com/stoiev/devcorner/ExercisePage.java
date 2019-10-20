@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,7 +37,7 @@ public class ExercisePage extends AppCompatActivity {
 
         // Set title text
         Bundle b = getIntent().getExtras();
-        String newTitle = "Title";
+        String newTitle;
         if (b != null) {
             newTitle = b.getString("newTitle");
             TextView pageTitle = findViewById(R.id.exercisePageTitle);
@@ -56,9 +55,9 @@ public class ExercisePage extends AppCompatActivity {
 
         // --- Hide FAB --- //
         fab = findViewById(R.id.exerciseFAB);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
                     fab.hide();
@@ -77,7 +76,7 @@ public class ExercisePage extends AppCompatActivity {
 
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
-                Collections.swap(ExerciseLine.getExerciseLines(),position_dragged,position_target);
+                Collections.swap(ExerciseLine.getExerciseLines(), position_dragged, position_target);
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(position_dragged, position_target);
                 return false;
             }
@@ -140,7 +139,6 @@ public class ExercisePage extends AppCompatActivity {
             title.setText(linesItem.getLine());
         }
     }
-
 
 
 }
