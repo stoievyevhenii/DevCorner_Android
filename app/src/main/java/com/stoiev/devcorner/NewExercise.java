@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -77,15 +78,14 @@ public class NewExercise extends AppCompatActivity {
 
             @Override
             public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
+                                        @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if (position == 0) {
                     // Set the hint text color gray
-                    tv.setTextColor(getResources().getColor(R.color.colorAccent));
-                } else {
-                    tv.setTextColor(getResources().getColor(R.color.gray));
-                }
+                    tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                } else
+                    tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 return view;
             }
         };

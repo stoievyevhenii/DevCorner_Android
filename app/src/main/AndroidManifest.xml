@@ -11,6 +11,15 @@
         android:theme="@style/Theme.MaterialComponents"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".SplashScreen"
+            android:theme="@style/SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Register"
             android:theme="@style/LoginPage" />
         <activity
@@ -30,13 +39,7 @@
             android:theme="@style/HomePage" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/LoginPage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/LoginPage" />
     </application>
 
 </manifest>

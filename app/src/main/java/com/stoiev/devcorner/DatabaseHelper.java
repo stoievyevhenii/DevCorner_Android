@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+// Todo: create splash screen with method for checking user status in system
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     ////////////////////////////////
@@ -18,23 +20,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_LOGIN = "LOGIN";
     private static final String COL_PRIVILEGE = "PRIVILEGE";
     private static final String COL_SYSTEM_STATUS = "SYSTEM_STATUS";
+    public static final int DATABASE_VERSION = 1;
 
     ////////////////////////////////
 
     DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String create_table_execute = "CREATE TABLE " + TABLE_NAME + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_LOGIN + " TEXT, " + COL_PRIVILEGE + " INTEGER, " + COL_SYSTEM_STATUS + " INTEGER)";
-        sqLiteDatabase.execSQL(create_table_execute);
+        final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
+                " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COL_LOGIN + " TEXT, " + COL_PRIVILEGE + " INTEGER, " +
+                COL_SYSTEM_STATUS + " INTEGER)";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
         onCreate(sqLiteDatabase);
+    }
+
+    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        onUpgrade(sqLiteDatabase, oldVersion, newVersion);
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -36,6 +36,10 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@android:color/white</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="SplashScreen" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
 </resources>
