@@ -1,7 +1,6 @@
 package com.stoiev.devcorner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,15 +13,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.stoiev.devcorner.models.RegUser;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    EditText newUserLogin;
-    EditText newUserPassword;
+    EditText newUserLoginField;
+    EditText newUserPasswordField;
+    String newUserLogin;
+    String newUserPassword;
     Button regBtn;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -36,40 +36,43 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ///////////////////////
-        // --- Variables --- //
-        ///////////////////////
-        newUserLogin = findViewById(R.id.registerLogin);
-        newUserPassword = findViewById(R.id.registerPasswd);
+        newUserLoginField = findViewById(R.id.registerLogin);
+        newUserPasswordField = findViewById(R.id.registerPasswd);
+
         regBtn = findViewById(R.id.reg_btn);
-        ///////////////////////
 
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newUser.put("name", "yevheniich");
-                newUser.put("password", "banana_yes");
-                db.collection("users")
-                        .add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText
-                                (getApplicationContext(), "Success", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText
-                                        (getApplicationContext(), "Oopps, something went wrong", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                newUserLogin = newUserLoginField.getText().toString();
+                newUserPassword = newUserPasswordField.getText().toString();
+
+                regNewUser(newUserLogin, newUserPassword);
             }
         });
 
     }
 
+    protected void regNewUser(String newUserLogin, String newUserPassword) {
+        newUser.put("login", newUserLogin);
+        newUser.put("password", newUserPassword);
+        db.collection("users")
+                .add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText
+                        (getApplicationContext(), "Success", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText
+                                (getApplicationContext(), "Oopps, something went wrong", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+    }
 
 }

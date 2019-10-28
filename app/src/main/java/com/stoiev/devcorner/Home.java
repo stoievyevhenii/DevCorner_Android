@@ -50,8 +50,6 @@ public class Home extends AppCompatActivity {
         adapter.addAll(ModeItem.getFakeItems());
 
 
-
-
     }
 
     @Override
