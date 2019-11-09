@@ -1,80 +1,108 @@
 package com.stoiev.devcorner;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.room.Room;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.models.FirebaseCloud;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private String MainActivity;
+    public static FragmentManager fragmentManager;
+    public static AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragmentManager = getSupportFragmentManager();
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "user_system_status").allowMainThreadQueries().build();
     }
 
     ///////////
     // Login //
     ///////////
 
-    public void checkData(View view) {
-        LoginData getData = new LoginData();
+    public void checkData(final View view) {
+
         // Login data
         EditText loginField = findViewById(R.id.login);
-        String fieldLoginData = loginField.getText().toString().replace(" ", "");
-        String loginData = getData.getLogin();
+        final String fieldLoginData = loginField.getText().toString().replace(" ", "");
 
         // Passwd data
         EditText passwdField = findViewById(R.id.passwd);
         String fieldPasswdData = passwdField.getText().toString().replace(" ", "");
-        String passwdData = getData.getPasswd();
 
-        // Check login data
-        if (fieldLoginData.equals(loginData) && fieldPasswdData.equals(passwdData)) {
-            Intent homeForm = new Intent(this, Home.class);
-            startActivity(homeForm);
-            finish();
-        } else if (!fieldLoginData.equals(loginData)){
-            showMessage("Incorrect login");
-        } else if(!fieldPasswdData.equals(passwdData)){
-            showMessage("Incorrect password");
-        } else if (!fieldPasswdData.equals(passwdData) && !fieldLoginData.equals(loginData)){
-            showMessage("Incorrect login and password");
-        }
+        // Check data
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .whereEqualTo("login", fieldLoginData).whereEqualTo("password", fieldPasswdData)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                setUserStatus(view, fieldLoginData);
+                                openHomePage(view);
+                        }
+                        } else{
+                            Toast.makeText
+                                    (getApplicationContext(), "Error! Check your account data", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
     }
 
-    private void showMessage(String messageContext){
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, messageContext, duration);
-        toast.show();
-    }
-
-    public void register(View view) {
+    public void openRegisterPage(View view) {
         Intent registerForm = new Intent(this, Register.class);
         startActivity(registerForm);
     }
-}
 
-class LoginData {
-
-    LoginData() {
+    public void openHomePage(View view) {
+        Intent openHomePage = new Intent(this, Home.class);
+        startActivity(openHomePage);
     }
 
-    String getLogin() {
-        return "1";
+    public void setUserStatus(View view, String login) {
+        // Create local user
+        User user = new User();
+        user.login = login;
+        user.user_status = 1;
+
+        // Insert user in Room db
+        appDatabase.userDao().insert(user);
     }
 
-    String getPasswd() {
-        return "1";
+    public void checkRoom(){
+        List<User> users = appDatabase.userDao().getAll();
+
+        for (User usr: users){
+            int usrId = usr.uid;
+            int status = usr.user_status;
+            String loginInSystem = usr.login;
+            Toast.makeText
+                    (getApplicationContext(), "Id = "+usrId+"\nLogin = " + loginInSystem + "\nStatus = " + status, Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }

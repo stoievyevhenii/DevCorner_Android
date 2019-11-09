@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class User {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name = "login")
     public String login;
 
-    @ColumnInfo(name = "system_role")
-    public String system_role;
+    @ColumnInfo(name = "user_status")
+    public int user_status;
 
 }

@@ -42,11 +42,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
+        style="@style/Widget.Design.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openPageForNewExercise"
         android:src="@drawable/ic_add_black_24dp"
-        app:layout_anchor="@id/bottom_app_bar"
-        android:onClick="openPageForNewExercise"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchor="@id/bottom_app_bar" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

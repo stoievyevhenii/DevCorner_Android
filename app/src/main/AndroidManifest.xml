@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".AccountPage"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashScreen">

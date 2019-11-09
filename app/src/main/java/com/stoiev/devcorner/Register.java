@@ -1,5 +1,6 @@
 package com.stoiev.devcorner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,6 @@ public class Register extends AppCompatActivity {
     String newUserPassword;
     Button regBtn;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     Map<String, Object> newUser = new HashMap<>();
 
     @Override
@@ -46,14 +46,14 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 newUserLogin = newUserLoginField.getText().toString();
                 newUserPassword = newUserPasswordField.getText().toString();
-
-                regNewUser(newUserLogin, newUserPassword);
+                regNewUser(newUserLogin, newUserPassword, view);
             }
         });
 
     }
 
-    protected void regNewUser(String newUserLogin, String newUserPassword) {
+    protected void regNewUser(String newUserLogin, String newUserPassword, final View view) {
+
         newUser.put("login", newUserLogin);
         newUser.put("password", newUserPassword);
         db.collection("users")
@@ -63,6 +63,8 @@ public class Register extends AppCompatActivity {
                 Toast.makeText
                         (getApplicationContext(), "Success", Toast.LENGTH_SHORT)
                         .show();
+                backToLogin(view);
+
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -71,8 +73,14 @@ public class Register extends AppCompatActivity {
                         Toast.makeText
                                 (getApplicationContext(), "Oopps, something went wrong", Toast.LENGTH_SHORT)
                                 .show();
+
                     }
                 });
+    }
+
+    protected void backToLogin(View view) {
+        Intent backToLogin = new Intent(this, MainActivity.class);
+        startActivity(backToLogin);
     }
 
 }

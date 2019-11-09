@@ -48,8 +48,6 @@ public class Home extends AppCompatActivity {
         RecyclerAdapter adapter = new RecyclerAdapter();
         recycleView.setAdapter(adapter);
         adapter.addAll(ModeItem.getFakeItems());
-
-
     }
 
     @Override

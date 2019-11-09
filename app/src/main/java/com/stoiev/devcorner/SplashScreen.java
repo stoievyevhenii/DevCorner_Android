@@ -1,50 +1,73 @@
 package com.stoiev.devcorner;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
-import android.content.Intent;
-import android.os.Bundle;
+import com.stoiev.devcorner.entity.User;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
-
-    public static SplashScreen instance;
-    private AppDatabase database;
+    private static AppDatabase appDatabase;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load data (SQLite)
-        instance = this;
-        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user-role").build();
-        //
-        // Load data ( --- FIREBASE ---)
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Hello beautiful World");
-        myRef.setValue("Hello, World!");
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "user_system_status").allowMainThreadQueries().build();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        // Check user status in system
+        checkUserStatus();
     }
 
-    public static SplashScreen getInstance() {
-        return instance;
+    private void checkUserStatus() {
+        List<User> users = appDatabase.userDao().getAll();
+        int status = 0;
+        int statusInSystem = 0;
+
+
+        // If Room does not have users
+        try {
+            for (User usr : users) {
+                statusInSystem = usr.user_status;
+            }
+        } catch (Exception e) {
+            openNextPage("Home");
+        }
+
+
+        // Open next page
+        if (statusInSystem > status) {
+            openNextPage("Home");
+        } else {
+            openNextPage("MainActivity");
+        }
     }
 
-    public AppDatabase getDatabase() {
-        return database;
+
+    private void openNextPage(String nextPage){
+        switch(nextPage){
+            case "Home":
+                Intent homeIntent = new Intent(this, Home.class);
+                startActivity(homeIntent);
+                finish();
+                break;
+            case "MainActivity":
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
+                finish();
+                break;
+        }
     }
+
 }
