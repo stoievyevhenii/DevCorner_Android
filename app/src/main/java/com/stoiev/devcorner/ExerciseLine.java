@@ -15,11 +15,11 @@ public class ExerciseLine {
         return number;
     }
 
-    public String getLine() {
+    String getLine() {
         return line;
     }
 
-    public static ArrayList<ExerciseLine> getExerciseLines() {
+    static ArrayList<ExerciseLine> getExerciseLines() {
         ArrayList<ExerciseLine> linesDataList = new ArrayList<>();
         linesDataList.add(new ExerciseLine(1, "First_line"));
         linesDataList.add(new ExerciseLine(2, "Second_line"));

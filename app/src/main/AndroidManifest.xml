@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AccountPage"></activity>
+        tools:ignore="GoogleAppIndexingWarning"
+        android:allowBackup="true"
+        android:fullBackupContent="true">
+
+        <activity android:name=".AccountPage" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashScreen">
@@ -23,9 +26,6 @@
         <activity
             android:name=".Register"
             android:theme="@style/LoginPage" />
-        <activity
-            android:name=".About"
-            android:label="@string/title_activity_about" />
         <activity
             android:name=".ExercisePage"
             android:theme="@style/ExercisePage" />

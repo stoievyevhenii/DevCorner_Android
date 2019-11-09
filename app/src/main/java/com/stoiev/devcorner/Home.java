@@ -59,18 +59,11 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuAccount:
-                openAccountPage();
-                return true;
-
-            case R.id.menuAbout:
-                openAboutPage();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menuAccount) {
+            openAccountPage();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     // Layout
@@ -117,14 +110,14 @@ public class Home extends AppCompatActivity {
         private TextView group;
         private TextView author;
 
-        public RecyclerViewHolder(@NonNull View itemView) {
+        RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.card_title);
             group = itemView.findViewById(R.id.group);
             author = itemView.findViewById(R.id.author);
         }
 
-        public void bind(ModeItem modeItem) {
+        void bind(ModeItem modeItem) {
             title.setText(modeItem.getTitle());
             group.setText(modeItem.getGroup());
             author.setText(modeItem.getAuthor());
@@ -135,11 +128,6 @@ public class Home extends AppCompatActivity {
     public void openPageForNewExercise(View view) {
         Intent addNewExercise = new Intent(this, NewExercise.class);
         startActivity(addNewExercise);
-    }
-
-    public void openAboutPage() {
-        Intent openAbout = new Intent(this, About.class);
-        startActivity(openAbout);
     }
 
     public void openAccountPage() {

@@ -17,14 +17,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.stoiev.devcorner.entity.User;
-import com.stoiev.devcorner.models.FirebaseCloud;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private String MainActivity;
     public static FragmentManager fragmentManager;
     public static AppDatabase appDatabase;
 
@@ -62,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 setUserStatus(view, fieldLoginData);
-                                openHomePage(view);
+                                openHomePage();
                         }
                         } else{
                             Toast.makeText
@@ -78,9 +74,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(registerForm);
     }
 
-    public void openHomePage(View view) {
+    public void openHomePage() {
         Intent openHomePage = new Intent(this, Home.class);
         startActivity(openHomePage);
+        finish();
     }
 
     public void setUserStatus(View view, String login) {
@@ -91,18 +88,5 @@ public class MainActivity extends AppCompatActivity {
 
         // Insert user in Room db
         appDatabase.userDao().insert(user);
-    }
-
-    public void checkRoom(){
-        List<User> users = appDatabase.userDao().getAll();
-
-        for (User usr: users){
-            int usrId = usr.uid;
-            int status = usr.user_status;
-            String loginInSystem = usr.login;
-            Toast.makeText
-                    (getApplicationContext(), "Id = "+usrId+"\nLogin = " + loginInSystem + "\nStatus = " + status, Toast.LENGTH_SHORT)
-                    .show();
-        }
     }
 }

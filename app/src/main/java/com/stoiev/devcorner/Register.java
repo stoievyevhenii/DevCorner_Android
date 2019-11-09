@@ -64,6 +64,7 @@ public class Register extends AppCompatActivity {
                         (getApplicationContext(), "Success", Toast.LENGTH_SHORT)
                         .show();
                 backToLogin(view);
+                finish();
 
             }
         })

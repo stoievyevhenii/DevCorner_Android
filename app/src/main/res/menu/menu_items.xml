@@ -8,11 +8,6 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/menuAbout"
-                android:title="@string/menuAbout"
-                android:icon="@drawable/ic_info_outline_black_24dp"
-                app:showAsAction="ifRoom" />
-            <item
                 android:id="@+id/menuAccount"
                 android:icon="@drawable/ic_account_circle_black_24dp"
                 android:title="@string/menuAccount"

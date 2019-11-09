@@ -35,16 +35,14 @@ public class SplashScreen extends AppCompatActivity {
         int status = 0;
         int statusInSystem = 0;
 
-
         // If Room does not have users
         try {
             for (User usr : users) {
                 statusInSystem = usr.user_status;
             }
         } catch (Exception e) {
-            openNextPage("Home");
+            openNextPage("MainActivity");
         }
-
 
         // Open next page
         if (statusInSystem > status) {
@@ -55,8 +53,8 @@ public class SplashScreen extends AppCompatActivity {
     }
 
 
-    private void openNextPage(String nextPage){
-        switch(nextPage){
+    private void openNextPage(String nextPage) {
+        switch (nextPage) {
             case "Home":
                 Intent homeIntent = new Intent(this, Home.class);
                 startActivity(homeIntent);

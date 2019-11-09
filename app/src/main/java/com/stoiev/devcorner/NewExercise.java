@@ -67,13 +67,9 @@ public class NewExercise extends AppCompatActivity {
                 this, R.layout.spinner_item, groupsList) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+                // Disable the first item from Spinner
+                // First item will be use for hint
+                return position != 0;
             }
 
             @Override
@@ -124,5 +120,8 @@ public class NewExercise extends AppCompatActivity {
             }
         });
     }
+
+    // TODO create method for new exercises
+    protected void uploadNewExercise(){}
 
 }
