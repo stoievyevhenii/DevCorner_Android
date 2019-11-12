@@ -2,11 +2,14 @@ package com.stoiev.devcorner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
+import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 
 import java.util.List;
@@ -50,6 +53,13 @@ public class SplashScreen extends AppCompatActivity {
         } else {
             openNextPage("MainActivity");
         }
+
+//        RoomActions getData = new RoomActions();
+//        if(getData.checkUserStatus() > 0){
+//            openNextPage("Home");
+//        } else{
+//            openNextPage("MainActivity");
+//        }
     }
 
 

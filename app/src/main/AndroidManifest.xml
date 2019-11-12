@@ -4,15 +4,15 @@
     package="com.stoiev.devcorner">
 
     <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:allowBackup="true"
-        android:fullBackupContent="true">
-
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".DB.RoomActions"></activity>
         <activity android:name=".AccountPage" />
         <activity
             android:name=".SplashScreen"

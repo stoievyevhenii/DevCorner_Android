@@ -1,9 +1,7 @@
 package com.stoiev.devcorner;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,15 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.DB.FirebaseActions;
+import com.stoiev.devcorner.entity.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class NewExercise extends AppCompatActivity {
+    private static AppDatabase appDatabase;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,10 @@ public class NewExercise extends AppCompatActivity {
         setContentView(R.layout.activity_new_exercise);
         Toolbar toolbar = findViewById(R.id.newExerciseToolbar);
         setSupportActionBar(toolbar);
+
+        // Init Room DB
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "user_system_status").allowMainThreadQueries().build();
 
         // Back button action
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -43,9 +52,6 @@ public class NewExercise extends AppCompatActivity {
 
         // Initialize spinner data
         initSpinner();
-
-        // FAB message
-        fabMessage();
     }
 
 
@@ -93,35 +99,48 @@ public class NewExercise extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
-                // If user change the default selection
-                // First item is disable and it is used for hint
-                if (position > 0) {
-                    // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
-                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
 
-    protected void fabMessage() {
-        FloatingActionButton fab = findViewById(R.id.addExercise);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "This functionality in progress", Snackbar.LENGTH_LONG)
-                        .setAction("Thank's", null).show();
+    public void uploadNewExercise(View view) {
+        FirebaseActions uploadData = new FirebaseActions();
+
+        // Get all field
+        String exerciseTitleText, exerciseGroupText, exerciseBodyText;
+        TextInputEditText exerciseTitle = findViewById(R.id.newExerciseTitle);
+        Spinner exerciseGroup = findViewById(R.id.newExerciseGroup);
+        TextInputEditText exerciseContent = findViewById(R.id.newExerciseContent);
+
+        // Convert data from fields in String
+        exerciseTitleText = Objects.requireNonNull(exerciseTitle.getText()).toString();
+        exerciseGroupText = Objects.requireNonNull(exerciseGroup.getSelectedItem()).toString();
+        exerciseBodyText = Objects.requireNonNull(exerciseContent.getText()).toString();
+
+        // Field blank check
+        if (!exerciseTitleText.isEmpty() && !exerciseGroupText.isEmpty() && !exerciseBodyText.isEmpty()) {
+            //Get author
+            List<User> users = appDatabase.userDao().getAll();
+            String author = "author";
+
+            // If Room does not have users
+            try {
+                for (User usr : users) {
+                    author = usr.login;
+                }
+            } catch (Exception ignored) {
             }
-        });
+
+            // Send data in DB
+            uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author);
+        } else {
+            Toast.makeText
+                    (getApplicationContext(), "Our AI find error in your data! Try to find this error", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
-
-    // TODO create method for new exercises
-    protected void uploadNewExercise(){}
-
 }

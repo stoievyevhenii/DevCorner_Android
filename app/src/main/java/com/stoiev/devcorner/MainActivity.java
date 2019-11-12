@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.entity.User;
 
 import java.util.Objects;
@@ -89,4 +90,5 @@ public class MainActivity extends AppCompatActivity {
         // Insert user in Room db
         appDatabase.userDao().insert(user);
     }
+
 }

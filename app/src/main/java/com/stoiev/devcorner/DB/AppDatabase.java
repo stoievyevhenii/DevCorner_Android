@@ -1,4 +1,4 @@
-package com.stoiev.devcorner;
+package com.stoiev.devcorner.DB;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
