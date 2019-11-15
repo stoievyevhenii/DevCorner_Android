@@ -38,6 +38,9 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(toolbar);
 
+        // --- Get exercises list --- //
+
+
         // --- Set layout --- //
 
         recycleView = findViewById(R.id.cardsLayout);
@@ -47,7 +50,7 @@ public class Home extends AppCompatActivity {
         recycleView.setLayoutManager(verticalLinearLayoutManager);
         RecyclerAdapter adapter = new RecyclerAdapter();
         recycleView.setAdapter(adapter);
-        adapter.addAll(ModeItem.getFakeItems());
+        adapter.addAll(HomeList.getExerciseItems());
     }
 
     @Override
@@ -79,11 +82,11 @@ public class Home extends AppCompatActivity {
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<Home.RecyclerViewHolder> {
-        private ArrayList<ModeItem> items = new ArrayList<>();
+        private ArrayList<HomeList> items = new ArrayList<>();
 
-        void addAll(List<ModeItem> fakeItems) {
+        void addAll(List<HomeList> exerciseItems) {
             int pos = getItemCount();
-            this.items.addAll(fakeItems);
+            this.items.addAll(exerciseItems);
             notifyItemRangeInserted(pos, this.items.size());
         }
 
@@ -117,10 +120,10 @@ public class Home extends AppCompatActivity {
             author = itemView.findViewById(R.id.author);
         }
 
-        void bind(ModeItem modeItem) {
-            title.setText(modeItem.getTitle());
-            group.setText(modeItem.getGroup());
-            author.setText(modeItem.getAuthor());
+        void bind(HomeList homeList) {
+            title.setText(homeList.getTitle());
+            group.setText(homeList.getGroup());
+            author.setText(homeList.getAuthor());
         }
     }
 
