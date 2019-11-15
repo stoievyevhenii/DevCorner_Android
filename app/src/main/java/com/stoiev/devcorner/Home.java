@@ -2,32 +2,30 @@ package com.stoiev.devcorner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class Home extends AppCompatActivity {
 
-    private RecyclerView recycleView;
-    private LinearLayoutManager verticalLinearLayoutManager;
-    private LinearLayoutManager horizontalLinearLayoutManager;
+    // var for firebase
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference exerciseRef = db.collection("exercises");
+    private ExercisesAdapter adapter;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -38,20 +36,37 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(toolbar);
 
-        // --- Get exercises list --- //
-
-
         // --- Set layout --- //
-
-        recycleView = findViewById(R.id.cardsLayout);
-        verticalLinearLayoutManager = new LinearLayoutManager(this);
-        horizontalLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
-        recycleView.setLayoutManager(verticalLinearLayoutManager);
-        RecyclerAdapter adapter = new RecyclerAdapter();
-        recycleView.setAdapter(adapter);
-        adapter.addAll(HomeList.getExerciseItems());
+        setUpRecyclerView();
     }
+
+
+    private void setUpRecyclerView() {
+        Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<HomeListItem> options = new FirestoreRecyclerOptions.Builder<HomeListItem>()
+                .setQuery(query, HomeListItem.class)
+                .build();
+
+        adapter = new ExercisesAdapter(options);
+        RecyclerView recycleView = findViewById(R.id.cardsLayout);
+        recycleView.setHasFixedSize(true);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        recycleView.setAdapter(adapter);
+    }
+
+    //  -- Firebase rules
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+    // -- end firebase rules
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,63 +84,6 @@ public class Home extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Layout
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recycleView.setLayoutManager(horizontalLinearLayoutManager);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recycleView.setLayoutManager(verticalLinearLayoutManager);
-        }
-
-    }
-
-    private class RecyclerAdapter extends RecyclerView.Adapter<Home.RecyclerViewHolder> {
-        private ArrayList<HomeList> items = new ArrayList<>();
-
-        void addAll(List<HomeList> exerciseItems) {
-            int pos = getItemCount();
-            this.items.addAll(exerciseItems);
-            notifyItemRangeInserted(pos, this.items.size());
-        }
-
-        @NonNull
-        @Override
-        public Home.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
-            return new Home.RecyclerViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull Home.RecyclerViewHolder holder, int position) {
-            holder.bind(items.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-    }
-
-    private class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        private TextView title;
-        private TextView group;
-        private TextView author;
-
-        RecyclerViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.card_title);
-            group = itemView.findViewById(R.id.group);
-            author = itemView.findViewById(R.id.author);
-        }
-
-        void bind(HomeList homeList) {
-            title.setText(homeList.getTitle());
-            group.setText(homeList.getGroup());
-            author.setText(homeList.getAuthor());
-        }
-    }
 
     // Pages
     public void openPageForNewExercise(View view) {

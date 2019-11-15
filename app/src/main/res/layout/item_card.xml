@@ -13,8 +13,6 @@
     android:clickable="false"
     android:focusable="auto"
     android:onClick="openExercisePage"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="2dp"
     card_view:cardPreventCornerOverlap="false"
     card_view:cardUseCompatPadding="false"
     card_view:layout_anchorGravity="center_vertical">
