@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DB.RoomActions"></activity>
+        <activity android:name=".DB.RoomActions" />
         <activity android:name=".AccountPage" />
         <activity
             android:name=".SplashScreen"

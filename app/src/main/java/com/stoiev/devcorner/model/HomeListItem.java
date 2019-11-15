@@ -1,4 +1,4 @@
-package com.stoiev.devcorner;
+package com.stoiev.devcorner.model;
 
 public class HomeListItem{
     private String title;

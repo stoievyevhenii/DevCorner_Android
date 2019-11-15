@@ -8,7 +8,7 @@
     <string name="bottom_navigation_account">Account</string>
     <string name="title_activity_new_exercise">Add new exercise</string>
     <string name="title_activity_about">About</string>
-    <string name="register_header">Here you can sign in</string>
+    <string name="register_header">Sign in</string>
 
 
     <!-- Button -->
@@ -46,4 +46,5 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="app_logo">app-logo</string>
     <string name="splash_description">DevCorner</string>
+    <string name="login_icon">log-in icon</string>
 </resources>

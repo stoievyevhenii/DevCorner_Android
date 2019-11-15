@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.stoiev.devcorner.model.HomeListItem;
 
 public class ExercisesAdapter extends FirestoreRecyclerAdapter<HomeListItem, ExercisesAdapter.ExerciseHolder> {
 

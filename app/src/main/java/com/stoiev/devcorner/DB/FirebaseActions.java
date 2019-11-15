@@ -54,7 +54,6 @@ public class FirebaseActions implements FirebaseDAO {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
             }
         });
 

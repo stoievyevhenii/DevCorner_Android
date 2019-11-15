@@ -1,5 +1,6 @@
 package com.stoiev.devcorner;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.DB.FirebaseActions;
@@ -107,6 +109,7 @@ public class NewExercise extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("PrivateResource")
     public void uploadNewExercise(View view) {
         FirebaseActions uploadData = new FirebaseActions();
 
@@ -136,7 +139,15 @@ public class NewExercise extends AppCompatActivity {
             }
 
             // Send data in DB
-            uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author);
+            try{
+                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author);
+            } catch(Exception e){
+                new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
+                        .setTitle("Ooops!")
+                        .setMessage("Our servers are resting")
+                        .setPositiveButton("Ok!", /* listener = */ null);
+            }
+
         } else {
             Toast.makeText
                     (getApplicationContext(), "Our AI find error in your data! Try to find this error", Toast.LENGTH_SHORT)

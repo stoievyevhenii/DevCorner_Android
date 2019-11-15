@@ -13,11 +13,13 @@ import androidx.room.Room;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.helpers.Message;
 
 import java.util.Objects;
 
@@ -49,25 +51,28 @@ public class MainActivity extends AppCompatActivity {
         String fieldPasswdData = passwdField.getText().toString().replace(" ", "");
 
         // Check data
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .whereEqualTo("login", fieldLoginData).whereEqualTo("password", fieldPasswdData)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                setUserStatus(view, fieldLoginData);
-                                openHomePage();
+        if (fieldPasswdData.isEmpty() || fieldLoginData.isEmpty()) {
+            Message successMessage = new Message("Oooooops!","One of the fields is empty!");
+            successMessage.show(getSupportFragmentManager(), "success dialog");
+
+        } else {
+            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("users")
+                    .whereEqualTo("login", fieldLoginData).whereEqualTo("password", fieldPasswdData)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    setUserStatus(view, fieldLoginData);
+                                    openHomePage();
+                                }
+                            }
                         }
-                        } else{
-                            Toast.makeText
-                                    (getApplicationContext(), "Error! Check your account data", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
+                    });
+        }
+
     }
 
     public void openRegisterPage(View view) {

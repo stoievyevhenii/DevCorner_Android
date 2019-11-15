@@ -1,15 +1,18 @@
 package com.stoiev.devcorner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.stoiev.devcorner.DB.FirebaseActions;
+import com.stoiev.devcorner.helpers.Message;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +24,7 @@ public class Register extends AppCompatActivity {
     String newUserLogin;
     String newUserPassword;
     Button regBtn;
+
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> newUser = new HashMap<>();
 
@@ -48,9 +52,18 @@ public class Register extends AppCompatActivity {
 
     }
 
+    @SuppressLint("PrivateResource")
     protected void regNewUser(String newUserLogin, String newUserPassword) {
         FirebaseActions callFirebaseActions = new FirebaseActions();
-        callFirebaseActions.regNewUser(newUserLogin, newUserPassword);
+
+        if (newUserLogin.isEmpty() || newUserPassword.isEmpty()) {
+            Message successMessage = new Message("Oooooops!","One of the fields is empty!");
+            successMessage.show(getSupportFragmentManager(), "success dialog");
+        } else {
+            callFirebaseActions.regNewUser(newUserLogin, newUserPassword);
+            Message successMessage = new Message("Uhuhu", "Welcome in our friendly family!");
+            successMessage.show(getSupportFragmentManager(), "success dialog");
+        }
     }
 
     public void backToLogin() {
