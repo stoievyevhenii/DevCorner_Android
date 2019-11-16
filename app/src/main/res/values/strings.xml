@@ -49,7 +49,11 @@
     <string name="login_icon">log-in icon</string>
     <string name="add_button">+</string>
     <string name="save">Save</string>
-    <string name="result_number">Ok</string>
+    <string name="result_number">OK</string>
     <string name="exercise_result_image">Exercise result image</string>
     <string name="exercise_result_text">Result will be display here!</string>
+    <string name="user_icon">user icon</string>
+    <string name="log_out">Log out</string>
+    <string name="all_your_exercise">All your exercises</string>
+    <string name="username">username</string>
 </resources>

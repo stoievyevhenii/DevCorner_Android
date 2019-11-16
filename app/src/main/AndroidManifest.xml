@@ -17,7 +17,9 @@
             android:theme="@style/ResultPage"
              />
         <activity android:name=".DB.RoomActions" />
-        <activity android:name=".AccountPageActivity" />
+        <activity android:name=".AccountPageActivity"
+            android:theme="@style/AccountPage"
+            android:label="@string/menuAccount"/>
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">

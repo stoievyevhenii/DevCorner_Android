@@ -53,12 +53,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             openNextPage("MainActivity");
         }
 
-//        RoomActions getData = new RoomActions();
-//        if(getData.checkUserStatus() > 0){
-//            openNextPage("HomeActivity");
-//        } else{
-//            openNextPage("MainActivity");
-//        }
     }
 
 

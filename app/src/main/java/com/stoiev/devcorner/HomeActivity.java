@@ -93,9 +93,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openAccountPage() {
-        Toast.makeText
-                (getApplicationContext(), "Account page in work, thank's for you patience", Toast.LENGTH_SHORT)
-                .show();
+        Intent accountPage = new Intent(this, AccountPageActivity.class);
+        startActivity(accountPage);
     }
 
     public void openExercisePage(View view) {

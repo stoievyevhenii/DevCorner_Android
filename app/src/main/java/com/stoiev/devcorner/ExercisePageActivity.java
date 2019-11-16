@@ -44,6 +44,13 @@ public class ExercisePageActivity extends AppCompatActivity {
         }
 
         // Set new layout
+        setLayout();
+
+        // Drag and drop
+        dragAndDrop();
+    }
+
+    private void setLayout() {
         recyclerView = findViewById(R.id.exercise_lines);
         verticalLinearLayoutManager = new LinearLayoutManager(this);
 
@@ -51,11 +58,9 @@ public class ExercisePageActivity extends AppCompatActivity {
         final RecyclerAdapter exercise_adapter = new RecyclerAdapter();
         recyclerView.setAdapter(exercise_adapter);
         exercise_adapter.addAll(ExerciseLine.getExerciseLines());
+    }
 
-
-        /////////////////
-        //Drag and drop//
-        /////////////////
+    private void dragAndDrop() {
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
