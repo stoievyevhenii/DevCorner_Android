@@ -17,7 +17,7 @@ import com.stoiev.devcorner.helpers.Message;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     EditText newUserLoginField;
     EditText newUserPasswordField;

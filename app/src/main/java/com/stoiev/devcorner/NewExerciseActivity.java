@@ -1,8 +1,8 @@
 package com.stoiev.devcorner;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class NewExercise extends AppCompatActivity {
+public class NewExerciseActivity extends AppCompatActivity {
     private static AppDatabase appDatabase;
 
 
@@ -128,7 +128,7 @@ public class NewExercise extends AppCompatActivity {
         if (!exerciseTitleText.isEmpty() && !exerciseGroupText.isEmpty() && !exerciseBodyText.isEmpty()) {
             //Get author
             List<User> users = appDatabase.userDao().getAll();
-            String author = "author";
+            String author = null;
 
             // If Room does not have users
             try {
@@ -141,6 +141,14 @@ public class NewExercise extends AppCompatActivity {
             // Send data in DB
             try{
                 uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author);
+                Bundle actionResult = new Bundle();
+                actionResult.putString("newTitle", "Thank you for your exercise!");
+
+                Intent openResultPage = new Intent(this, ResultActivity.class);
+                openResultPage.putExtras(actionResult);
+                startActivity(openResultPage);
+                finish();
+
             } catch(Exception e){
                 new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
                         .setTitle("Ooops!")

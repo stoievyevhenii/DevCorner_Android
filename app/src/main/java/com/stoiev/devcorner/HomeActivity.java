@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.stoiev.devcorner.model.HomeListItem;
 
-public class Home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     // var for firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -88,7 +88,7 @@ public class Home extends AppCompatActivity {
 
     // Pages
     public void openPageForNewExercise(View view) {
-        Intent addNewExercise = new Intent(this, NewExercise.class);
+        Intent addNewExercise = new Intent(this, NewExerciseActivity.class);
         startActivity(addNewExercise);
     }
 
@@ -102,14 +102,12 @@ public class Home extends AppCompatActivity {
         TextView cardTitle = view.findViewById(R.id.card_title);
         String cardTitleContent = cardTitle.getText().toString();
 
-        Intent openExercisePage = new Intent(this, ExercisePage.class);
+        Intent openExercisePage = new Intent(this, ExercisePageActivity.class);
 
         Bundle b = new Bundle();
         b.putString("newTitle", cardTitleContent);
         openExercisePage.putExtras(b);
-
         startActivity(openExercisePage);
-
 
     }
 

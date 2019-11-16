@@ -47,4 +47,9 @@
     <string name="app_logo">app-logo</string>
     <string name="splash_description">DevCorner</string>
     <string name="login_icon">log-in icon</string>
+    <string name="add_button">+</string>
+    <string name="save">Save</string>
+    <string name="result_number">Ok</string>
+    <string name="exercise_result_image">Exercise result image</string>
+    <string name="exercise_result_text">Result will be display here!</string>
 </resources>

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ExercisePage extends AppCompatActivity {
+public class ExercisePageActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
@@ -52,19 +52,6 @@ public class ExercisePage extends AppCompatActivity {
         recyclerView.setAdapter(exercise_adapter);
         exercise_adapter.addAll(ExerciseLine.getExerciseLines());
 
-        // --- Hide FAB --- //
-        fab = findViewById(R.id.exerciseFAB);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
-                    fab.hide();
-                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
-                    fab.show();
-                }
-            }
-        });
 
         /////////////////
         //Drag and drop//
@@ -98,7 +85,7 @@ public class ExercisePage extends AppCompatActivity {
 
     }
 
-    private class RecyclerAdapter extends RecyclerView.Adapter<ExercisePage.RecyclerViewHolder> {
+    private class RecyclerAdapter extends RecyclerView.Adapter<ExercisePageActivity.RecyclerViewHolder> {
         private ArrayList<ExerciseLine> exercise_items = new ArrayList<>();
 
         void addAll(List<ExerciseLine> items) {
@@ -109,13 +96,13 @@ public class ExercisePage extends AppCompatActivity {
 
         @NonNull
         @Override
-        public ExercisePage.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ExercisePageActivity.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_line, parent, false);
-            return new ExercisePage.RecyclerViewHolder(view);
+            return new ExercisePageActivity.RecyclerViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ExercisePage.RecyclerViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ExercisePageActivity.RecyclerViewHolder holder, int position) {
             holder.bind(exercise_items.get(position));
         }
 

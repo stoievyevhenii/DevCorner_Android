@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:fitsSystemWindows="true"
-    tools:context=".NewExercise">
+    tools:context=".NewExerciseActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -29,30 +29,26 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="392dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/appBarLayout"
-        app:layout_constraintStart_toEndOf="@+id/appBarLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        tools:context=".NewExercise"
+        tools:context=".NewExerciseActivity"
         tools:showIn="@layout/activity_new_exercise">
 
         <Spinner
             android:id="@+id/newExerciseGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/spinner_style"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/newExerciseContentField"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,17 +57,14 @@
             app:layout_constraintTop_toBottomOf="@+id/newExerciseTitleField"
             app:layout_constraintVertical_bias="1.0" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addExercise"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+        <Button
+            android:id="@+id/new_exercise_fab"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/fab"
             android:onClick="uploadNewExercise"
-            android:src="@drawable/ic_add_white_24dp"
-            app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -80,7 +73,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textColorHint="@color/nonAccent"
             app:hintAnimationEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -102,6 +95,7 @@
                 android:selectAllOnFocus="false"
                 android:singleLine="true"
                 android:textColor="@color/colorAccent" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

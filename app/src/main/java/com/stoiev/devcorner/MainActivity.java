@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import androidx.room.Room;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -76,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openRegisterPage(View view) {
-        Intent registerForm = new Intent(this, Register.class);
+        Intent registerForm = new Intent(this, RegisterActivity.class);
         startActivity(registerForm);
     }
 
     public void openHomePage() {
-        Intent openHomePage = new Intent(this, Home.class);
+        Intent openHomePage = new Intent(this, HomeActivity.class);
         startActivity(openHomePage);
         finish();
     }

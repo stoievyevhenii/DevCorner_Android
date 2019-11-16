@@ -12,10 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DB.RoomActions" />
-        <activity android:name=".AccountPage" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".ResultActivity"
+            android:theme="@style/ResultPage"
+             />
+        <activity android:name=".DB.RoomActions" />
+        <activity android:name=".AccountPageActivity" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,18 +28,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".RegisterActivity"
             android:theme="@style/LoginPage" />
         <activity
-            android:name=".ExercisePage"
+            android:name=".ExercisePageActivity"
             android:theme="@style/ExercisePage" />
         <activity
-            android:name=".NewExercise"
+            android:name=".NewExerciseActivity"
             android:label="@string/title_activity_new_exercise"
             android:theme="@style/NewExercisePage"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Home"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/HomePage" />
         <activity

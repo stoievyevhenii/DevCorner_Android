@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -14,11 +14,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cardsLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerInParent="false"
-            android:layout_centerHorizontal="false"
-            android:layout_centerVertical="false"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:background="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,18 +38,35 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimaryDark"
         app:fabAlignmentMode="center"
+        app:fabAnimationMode="scale"
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:background="@drawable/fab"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:onClick="openPageForNewExercise"
+        android:textColor="@android:color/white"
+        app:layout_anchor="@+id/fab"
+        app:layout_anchorGravity="center" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        style="@style/Widget.Design.FloatingActionButton"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="81dp"
         android:layout_height="wrap_content"
+        android:elevation="0dp"
         android:onClick="openPageForNewExercise"
         android:src="@drawable/ic_add_white_24dp"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@id/bottom_app_bar" />
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:layout_anchor="@id/bottom_app_bar"
+        app:rippleColor="@android:color/transparent" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
