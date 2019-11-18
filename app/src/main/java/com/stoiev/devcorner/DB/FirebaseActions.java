@@ -1,5 +1,6 @@
 package com.stoiev.devcorner.DB;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,11 +9,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.stoiev.devcorner.dao.FirebaseDAO;
+import com.stoiev.devcorner.helpers.Message;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +26,6 @@ public class FirebaseActions implements FirebaseDAO {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Map<String, Object> newUser = new HashMap<>();
     private Map<String, Object> newExercise = new HashMap<>();
-
 
     @Override
     public void addExercise(String exerciseTitle, String exerciseGroup, String exerciseBody, String author) {
@@ -42,22 +46,46 @@ public class FirebaseActions implements FirebaseDAO {
     }
 
     @Override
-    public void regNewUser(String newUserLogin, String newUserPassword) {
+    public void regNewUser(final String newUserLogin, final String newUserPassword) {
 
-        newUser.put("login", newUserLogin);
-        newUser.put("password", newUserPassword);
-        db.collection("users")
-                .add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        CollectionReference docRef = db.collection("users");
+        Query checkDataExists = docRef.whereEqualTo("login", newUserLogin);
+
+        checkDataExists.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                boolean isExisting = false;
+                for (DocumentSnapshot ds : queryDocumentSnapshots) {
+                    String login;
+                    login = ds.getString("login");
+                    if (login.equals(newUserLogin)) {
+                        Log.d("RegResult", "User already exists");
+                        isExisting = true;
+                    }
+
+                }
+                if (!isExisting) {
+                    Log.d("RegResult", "User isn't exists");
+                    newUser.put("login", newUserLogin);
+                    newUser.put("password", newUserPassword);
+
+                    db.collection("users").document(newUserLogin)
+                            .set(newUser)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("DB", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("DB", "Error writing document", e);
+                                }
+                            });
+                }
             }
         });
-
-
     }
 
     @Override
@@ -77,4 +105,5 @@ public class FirebaseActions implements FirebaseDAO {
                     }
                 });
     }
+
 }

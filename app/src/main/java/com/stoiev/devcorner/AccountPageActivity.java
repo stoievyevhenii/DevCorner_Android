@@ -1,7 +1,9 @@
 package com.stoiev.devcorner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -46,7 +48,8 @@ public class AccountPageActivity extends AppCompatActivity {
 
 
     private void setUpRecyclerView() {
-        Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING);
+        Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING)
+                .whereEqualTo("author", setUsername());
         FirestoreRecyclerOptions<HomeListItem> options = new FirestoreRecyclerOptions.Builder<HomeListItem>()
                 .setQuery(query, HomeListItem.class)
                 .build();
@@ -56,6 +59,19 @@ public class AccountPageActivity extends AppCompatActivity {
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         recycleView.setAdapter(adapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recycleView);
     }
 
     private void setUpToolbar() {
@@ -97,7 +113,7 @@ public class AccountPageActivity extends AppCompatActivity {
         startActivity(openMain);
     }
 
-    public void setUsername() {
+    public String setUsername() {
         String username = null;
         List<User> users = appDatabase.userDao().getAll();
         for (User usr : users) {
@@ -106,5 +122,7 @@ public class AccountPageActivity extends AppCompatActivity {
 
         TextView usernameField = findViewById(R.id.username);
         usernameField.setText(username);
+
+        return username;
     }
 }

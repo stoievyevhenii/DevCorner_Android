@@ -125,7 +125,7 @@ public class NewExerciseActivity extends AppCompatActivity {
         exerciseBodyText = Objects.requireNonNull(exerciseContent.getText()).toString();
 
         // Field blank check
-        if (!exerciseTitleText.isEmpty() && !exerciseGroupText.isEmpty() && !exerciseBodyText.isEmpty()) {
+        if (!exerciseTitleText.isEmpty() && !exerciseGroupText.equals("Select") && !exerciseBodyText.isEmpty()) {
             //Get author
             List<User> users = appDatabase.userDao().getAll();
             String author = null;

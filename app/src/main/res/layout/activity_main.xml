@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/loginIcon"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="142dp"
@@ -17,10 +17,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/login" />
+        app:srcCompat="@drawable/login"
+        android:contentDescription="@string/login_icon" />
 
     <Button
-        android:id="@+id/sign_in"
+        android:id="@+id/sign_in_btn"
         style="@style/btnTheme"
         android:layout_width="0dp"
         android:layout_height="54dp"
@@ -31,12 +32,12 @@
         android:background="@drawable/gradient"
         android:elegantTextHeight="true"
         android:freezesText="true"
-        android:onClick="checkData"
         android:text="@string/signIn"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:onClick="checkData"
         app:layout_constraintBottom_toTopOf="@+id/createAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
@@ -59,7 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in" />
+        app:layout_constraintTop_toBottomOf="@id/sign_in_btn" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginField"

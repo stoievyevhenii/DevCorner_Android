@@ -10,18 +10,27 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.model.HomeListItem;
 
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
+
+    private static AppDatabase appDatabase;
 
     // var for firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -31,11 +40,14 @@ public class HomeActivity extends AppCompatActivity {
     @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(toolbar);
+
+        // Init Room
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "user_system_status").allowMainThreadQueries().build();
 
         // --- Set layout --- //
         setUpRecyclerView();
@@ -43,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void setUpRecyclerView() {
+        String user = null;
+
         Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<HomeListItem> options = new FirestoreRecyclerOptions.Builder<HomeListItem>()
                 .setQuery(query, HomeListItem.class)
@@ -53,6 +67,26 @@ public class HomeActivity extends AppCompatActivity {
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         recycleView.setAdapter(adapter);
+
+        // Delete item if user = admin
+        List<User> users = appDatabase.userDao().getAll();
+        for (User usr : users) {
+            user = usr.login;
+        }
+
+        if(user.equals("admin")){
+            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    adapter.deleteItem(viewHolder.getAdapterPosition());
+                }
+            }).attachToRecyclerView(recycleView);
+        }
     }
 
     //  -- Firebase rules

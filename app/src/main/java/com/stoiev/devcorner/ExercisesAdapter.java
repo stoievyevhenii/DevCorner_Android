@@ -33,6 +33,10 @@ public class ExercisesAdapter extends FirestoreRecyclerAdapter<HomeListItem, Exe
         return new ExerciseHolder(view);
     }
 
+    public void deleteItem(int position){
+        getSnapshots().getSnapshot(position).getReference().delete();
+    }
+
     class ExerciseHolder extends RecyclerView.ViewHolder{
 
         TextView title;

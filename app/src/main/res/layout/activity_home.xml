@@ -40,7 +40,8 @@
         app:fabAlignmentMode="center"
         app:fabAnimationMode="scale"
         app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="@drawable/menu" />
 
     <Button
         android:id="@+id/button2"
