@@ -52,14 +52,14 @@ public class HomeActivity extends AppCompatActivity {
                 "user_system_status").allowMainThreadQueries().build();
 
         // --- Set layout --- //
-        setUpRecyclerView();
+        setUpRecyclerView("title");
     }
 
 
-    private void setUpRecyclerView() {
+    private void setUpRecyclerView(String sortBy) {
         String user = null;
 
-        Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING);
+        Query query = exerciseRef.orderBy(sortBy, Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<HomeListItem> options = new FirestoreRecyclerOptions.Builder<HomeListItem>()
                 .setQuery(query, HomeListItem.class)
                 .build();
