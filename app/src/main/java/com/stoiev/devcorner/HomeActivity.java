@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         assert user != null;
-        if(user.equals("admin")){
+        if (user.equals("admin")) {
             new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                 @Override
                 public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onChildDraw (Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+                public void onChildDraw(Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                     new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                             .addBackgroundColor(ContextCompat.getColor(HomeActivity.this, R.color.red))
                             .addActionIcon(R.drawable.delete_outline)

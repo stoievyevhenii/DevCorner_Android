@@ -6,13 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="4dp"
-    android:clickable="false"
-    android:focusable="auto"
+    android:clickable="true"
+    android:focusable="true"
     android:onClick="openExercisePage"
+    card_view:cardElevation="0dp"
+    card_view:cardMaxElevation="0dp"
     card_view:cardPreventCornerOverlap="false"
     card_view:cardUseCompatPadding="false"
     card_view:layout_anchorGravity="center_vertical">
@@ -22,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
+        android:background="@drawable/card_style"
         android:orientation="horizontal">
 
         <LinearLayout

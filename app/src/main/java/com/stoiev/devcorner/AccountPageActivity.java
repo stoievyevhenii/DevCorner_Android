@@ -3,12 +3,14 @@ package com.stoiev.devcorner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
 
 import java.util.List;
@@ -42,14 +45,13 @@ public class AccountPageActivity extends AppCompatActivity {
         // Init toolbar
         setUpToolbar();
 
-        setUpRecyclerView();
+        setUpRecyclerView("author");
         setUsername();
     }
 
 
-    private void setUpRecyclerView() {
-        Query query = exerciseRef.orderBy("title", Query.Direction.DESCENDING)
-                .whereEqualTo("author", setUsername());
+    private void setUpRecyclerView(String sortBy) {
+        Query query = exerciseRef.whereEqualTo(sortBy, setUsername());
         FirestoreRecyclerOptions<HomeListItem> options = new FirestoreRecyclerOptions.Builder<HomeListItem>()
                 .setQuery(query, HomeListItem.class)
                 .build();
@@ -70,6 +72,17 @@ public class AccountPageActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addBackgroundColor(ContextCompat.getColor(AccountPageActivity.this, R.color.red))
+                        .addActionIcon(R.drawable.delete_outline)
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         }).attachToRecyclerView(recycleView);
     }
