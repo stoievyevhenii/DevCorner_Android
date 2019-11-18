@@ -2,17 +2,18 @@ package com.stoiev.devcorner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     // var for firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference exerciseRef = db.collection("exercises");
-    private ExercisesAdapter adapter;
+    private CardExercisesAdapter adapter;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -62,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setQuery(query, HomeListItem.class)
                 .build();
 
-        adapter = new ExercisesAdapter(options);
+        adapter = new CardExercisesAdapter(options);
         RecyclerView recycleView = findViewById(R.id.cardsLayout);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
             user = usr.login;
         }
 
+        assert user != null;
         if(user.equals("admin")){
             new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                 @Override
@@ -85,7 +88,20 @@ public class HomeActivity extends AppCompatActivity {
                 public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                     adapter.deleteItem(viewHolder.getAdapterPosition());
                 }
+
+                @Override
+                public void onChildDraw (Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+                    new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                            .addBackgroundColor(ContextCompat.getColor(HomeActivity.this, R.color.red))
+                            .addActionIcon(R.drawable.delete_outline)
+                            .create()
+                            .decorate();
+
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
             }).attachToRecyclerView(recycleView);
+
         }
     }
 

@@ -12,9 +12,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.stoiev.devcorner.model.HomeListItem;
 
-public class ExercisesAdapter extends FirestoreRecyclerAdapter<HomeListItem, ExercisesAdapter.ExerciseHolder> {
+public class CardExercisesAdapter extends FirestoreRecyclerAdapter<HomeListItem, CardExercisesAdapter.ExerciseHolder> {
 
-    public ExercisesAdapter(@NonNull FirestoreRecyclerOptions<HomeListItem> options) {
+
+    public CardExercisesAdapter(@NonNull FirestoreRecyclerOptions<HomeListItem> options) {
         super(options);
     }
 
@@ -50,4 +51,6 @@ public class ExercisesAdapter extends FirestoreRecyclerAdapter<HomeListItem, Exe
             author = itemView.findViewById(R.id.author);
         }
     }
+
+
 }

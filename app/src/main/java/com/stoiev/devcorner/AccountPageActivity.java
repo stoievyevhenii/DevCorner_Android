@@ -28,7 +28,7 @@ public class AccountPageActivity extends AppCompatActivity {
     private static AppDatabase appDatabase;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference exerciseRef = db.collection("exercises");
-    private ExercisesAdapter adapter;
+    private CardExercisesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AccountPageActivity extends AppCompatActivity {
                 .setQuery(query, HomeListItem.class)
                 .build();
 
-        adapter = new ExercisesAdapter(options);
+        adapter = new CardExercisesAdapter(options);
         RecyclerView recycleView = findViewById(R.id.userExercises);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -124,5 +124,17 @@ public class AccountPageActivity extends AppCompatActivity {
         usernameField.setText(username);
 
         return username;
+    }
+
+    public void openExercisePage(View view){
+        TextView cardTitle = view.findViewById(R.id.card_title);
+        String cardTitleContent = cardTitle.getText().toString();
+
+        Intent openExercisePage = new Intent(this, ExercisePageActivity.class);
+
+        Bundle b = new Bundle();
+        b.putString("newTitle", cardTitleContent);
+        openExercisePage.putExtras(b);
+        startActivity(openExercisePage);
     }
 }

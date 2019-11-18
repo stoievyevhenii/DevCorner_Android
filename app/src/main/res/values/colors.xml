@@ -7,4 +7,5 @@
     <color name="colorPrimaryDarker">#171719</color>
     <color name="nonAccent">#C4C4C4</color>
     <color name="gray">#A0A0A0</color>
+    <color name="red">#F40C43</color>
 </resources>
