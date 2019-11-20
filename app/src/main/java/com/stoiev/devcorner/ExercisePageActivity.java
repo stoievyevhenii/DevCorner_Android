@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -131,6 +132,12 @@ public class ExercisePageActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent opeHomePage = new Intent(this, HomeActivity.class);
+        startActivity(opeHomePage);
+        finish();
+    }
 
 }
 

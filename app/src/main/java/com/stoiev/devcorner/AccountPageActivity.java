@@ -124,6 +124,7 @@ public class AccountPageActivity extends AppCompatActivity {
 
         Intent openMain = new Intent(this, MainActivity.class);
         startActivity(openMain);
+        finish();
     }
 
     public String setUsername() {
@@ -149,5 +150,12 @@ public class AccountPageActivity extends AppCompatActivity {
         b.putString("newTitle", cardTitleContent);
         openExercisePage.putExtras(b);
         startActivity(openExercisePage);
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent opeHomePage = new Intent(this, HomeActivity.class);
+        startActivity(opeHomePage);
+        finish();
     }
 }

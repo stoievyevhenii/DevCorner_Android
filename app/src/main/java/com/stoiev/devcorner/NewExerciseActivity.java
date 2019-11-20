@@ -3,10 +3,12 @@ package com.stoiev.devcorner;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.stoiev.devcorner.DB.AppDatabase;
@@ -30,8 +34,9 @@ import java.util.Objects;
 
 public class NewExerciseActivity extends AppCompatActivity {
     private static AppDatabase appDatabase;
-
-
+    public static String exerciseLanguage;
+    List<String> tagList = new ArrayList<>();
+    private int selectedChipText = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +59,16 @@ public class NewExerciseActivity extends AppCompatActivity {
 
         // Initialize spinner data
         initSpinner();
+
+        // Initialize chip group
+        setTag();
+
     }
 
 
     protected void initSpinner() {
         // Spinner Data
-        final Spinner spinner = findViewById(R.id.newExerciseGroup);
+        final Spinner groupSpinner = findViewById(R.id.newExerciseGroup);
 
         String[] groups = new String[]{
                 "Select exercise group...",
@@ -71,6 +80,7 @@ public class NewExerciseActivity extends AppCompatActivity {
 
         final List<String> groupsList = new ArrayList<>(Arrays.asList(groups));
 
+        // Init group spinner
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 this, R.layout.spinner_item, groupsList) {
             @Override
@@ -95,9 +105,9 @@ public class NewExerciseActivity extends AppCompatActivity {
         };
 
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(spinnerArrayAdapter);
+        groupSpinner.setAdapter(spinnerArrayAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
@@ -109,12 +119,49 @@ public class NewExerciseActivity extends AppCompatActivity {
         });
     }
 
+    // Init chip group
+    private void setTag() {
+        final ChipGroup chipGroup = findViewById(R.id.languages_chip_group);
+        tagList.add("Java");
+        tagList.add("Kotlin");
+        tagList.add("C++");
+        tagList.add("Python");
+        tagList.add("JavaScript");
+
+        for (int index = 0; index < tagList.size(); index++) {
+            final String tagName = tagList.get(index);
+            final Chip chip = new Chip(this);
+            chip.setText(tagName);
+            chip.setCheckable(true);
+
+            //Added click listener on close icon to remove tag from ChipGroup
+//            chip.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    exerciseLanguage = chip.getText().toString();
+//                }
+//            });
+
+            chip.setOnCheckedChangeListener(new Chip.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Log.d("Chip", "onCheckedChanged");
+                    exerciseLanguage = "";
+                }
+            });
+
+            Log.d("Chip", "Chip vale = " + exerciseLanguage);
+            chipGroup.addView(chip);
+        }
+    }
+
+
     @SuppressLint("PrivateResource")
     public void uploadNewExercise(View view) {
         FirebaseActions uploadData = new FirebaseActions();
+        String exerciseTitleText, exerciseGroupText, exerciseBodyText, selectableExerciseLanguage;
 
         // Get all field
-        String exerciseTitleText, exerciseGroupText, exerciseBodyText;
         TextInputEditText exerciseTitle = findViewById(R.id.newExerciseTitle);
         Spinner exerciseGroup = findViewById(R.id.newExerciseGroup);
         TextInputEditText exerciseContent = findViewById(R.id.newExerciseContent);
@@ -123,9 +170,17 @@ public class NewExerciseActivity extends AppCompatActivity {
         exerciseTitleText = Objects.requireNonNull(exerciseTitle.getText()).toString();
         exerciseGroupText = Objects.requireNonNull(exerciseGroup.getSelectedItem()).toString();
         exerciseBodyText = Objects.requireNonNull(exerciseContent.getText()).toString();
+        selectableExerciseLanguage = exerciseLanguage;
+
+        // Find selected chip
+        ChipGroup chipGroup = findViewById(R.id.languages_chip_group);
+        selectedChipText = chipGroup.getCheckedChipId();
 
         // Field blank check
-        if (!exerciseTitleText.isEmpty() && !exerciseGroupText.equals("Select exercise group...") && !exerciseBodyText.isEmpty()) {
+        if (!exerciseTitleText.isEmpty()
+                && !exerciseGroupText.equals("Select exercise group...")
+                && !exerciseBodyText.isEmpty()
+                && selectedChipText > 0) {
             //Get author
             List<User> users = appDatabase.userDao().getAll();
             String author = null;
@@ -138,9 +193,10 @@ public class NewExerciseActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
 
+
             // Send data in DB
-            try{
-                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author);
+            try {
+                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author, selectableExerciseLanguage);
                 Bundle actionResult = new Bundle();
                 actionResult.putString("newTitle", "Thank you for your exercise!");
 
@@ -149,7 +205,7 @@ public class NewExerciseActivity extends AppCompatActivity {
                 startActivity(openResultPage);
                 finish();
 
-            } catch(Exception e){
+            } catch (Exception e) {
                 new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
                         .setTitle("Ooops!")
                         .setMessage("Our servers are resting")
@@ -161,5 +217,12 @@ public class NewExerciseActivity extends AppCompatActivity {
                     (getApplicationContext(), "Our AI find error in your data! Try to find this error", Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent opeHomePage = new Intent(this, HomeActivity.class);
+        startActivity(opeHomePage);
+        finish();
     }
 }

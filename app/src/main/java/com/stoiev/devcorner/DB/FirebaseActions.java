@@ -28,11 +28,12 @@ public class FirebaseActions implements FirebaseDAO {
     private Map<String, Object> newExercise = new HashMap<>();
 
     @Override
-    public void addExercise(String exerciseTitle, String exerciseGroup, String exerciseBody, String author) {
+    public void addExercise(String exerciseTitle, String exerciseGroup, String exerciseBody, String author, String exerciseLanguage) {
         newExercise.put("title", exerciseTitle);
         newExercise.put("group", exerciseGroup);
         newExercise.put("body", exerciseBody);
         newExercise.put("author", author);
+        newExercise.put("language", exerciseLanguage);
         db.collection("exercises")
                 .add(newExercise).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

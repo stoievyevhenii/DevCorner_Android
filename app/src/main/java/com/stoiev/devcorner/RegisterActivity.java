@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,7 +22,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.DB.FirebaseActions;
+import com.stoiev.devcorner.DB.RoomActions;
+import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.Message;
 
 import java.util.HashMap;
@@ -35,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button regBtn;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static AppDatabase appDatabase;
     Map<String, Object> newUser = new HashMap<>();
 
     @Override
@@ -44,6 +50,12 @@ public class RegisterActivity extends AppCompatActivity {
         /////////////////////
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Init BD
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "user_system_status").allowMainThreadQueries().build();
+
+
 
         newUserLoginField = findViewById(R.id.registerLogin);
         newUserPasswordField = findViewById(R.id.registerPasswd);
@@ -107,8 +119,9 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();
 
-                                        // Back to login page
-                                        backToLogin();
+                                        // Open home page
+                                        setUserStatus(newUserLogin);
+//                                        openHomePage();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -123,9 +136,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void backToLogin() {
-        Intent backToLogin = new Intent(this, MainActivity.class);
-        startActivity(backToLogin);
+    public void setUserStatus(String login){
+        Intent sendData = new Intent(this, RoomActions.class);
+
+        Bundle b = new Bundle();
+        b.putString("user", login);
+        sendData.putExtras(b);
+
+        startActivity(sendData);
+        finish();
     }
 
 }

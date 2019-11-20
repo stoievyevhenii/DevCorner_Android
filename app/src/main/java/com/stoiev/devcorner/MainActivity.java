@@ -1,12 +1,12 @@
 package com.stoiev.devcorner;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.stoiev.devcorner.DB.AppDatabase;
-import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.helpers.Message;
 
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,18 +73,21 @@ public class MainActivity extends AppCompatActivity {
                             // Check user login and password
                             db.collection("users")
                                     .whereEqualTo("login", fieldLoginData)
-//                                    .whereEqualTo("password", fieldPasswdData)
+                                    .whereEqualTo("password", fieldPasswdData)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(Task<QuerySnapshot> task) {
-                                            Log.d("CheckResult", "1");
                                             if (task.isSuccessful()) {
-                                                Log.d("CheckResult", "2");
                                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                                    Log.d("CheckResult", "3");
+                                                    Context context = getApplicationContext();
+                                                    CharSequence text = "Welcome back, " +
+                                                            fieldLoginData + " !";
+                                                    int duration = Toast.LENGTH_SHORT;
+
+                                                    Toast toast = Toast.makeText(context, text, duration);
+                                                    toast.show();
                                                     setUserStatus(view, fieldLoginData);
-                                                    openHomePage();
                                                 }
                                             } else {
                                                 Log.d("CheckResult", "2");
@@ -113,19 +115,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(registerForm);
     }
 
-    public void openHomePage() {
-        Intent openHomePage = new Intent(this, HomeActivity.class);
-        startActivity(openHomePage);
-        finish();
-    }
-
     public void setUserStatus(View view, String login) {
-        // Create local user
-        User user = new User();
-        user.login = login;
-        user.user_status = 1;
 
-        // Insert user in Room db
-        appDatabase.userDao().insert(user);
+        Intent sendData = new Intent(this, RoomActions.class);
+
+        Bundle b = new Bundle();
+        b.putString("user", login);
+        sendData.putExtras(b);
+
+        startActivity(sendData);
+        finish();
     }
 }

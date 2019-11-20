@@ -56,4 +56,6 @@
     <string name="log_out">Log out</string>
     <string name="all_your_exercise">All your exercises</string>
     <string name="username">username</string>
+    <string name="card_language_divider">card_language_divider</string>
+    <string name="language">Language</string>
 </resources>

@@ -76,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
             user = usr.login;
         }
 
-        assert user != null;
         if (user.equals("admin")) {
             new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                 @Override
@@ -140,11 +139,13 @@ public class HomeActivity extends AppCompatActivity {
     public void openPageForNewExercise(View view) {
         Intent addNewExercise = new Intent(this, NewExerciseActivity.class);
         startActivity(addNewExercise);
+        finish();
     }
 
     public void openAccountPage() {
         Intent accountPage = new Intent(this, AccountPageActivity.class);
         startActivity(accountPage);
+        finish();
     }
 
     public void openExercisePage(View view) {
@@ -157,6 +158,7 @@ public class HomeActivity extends AppCompatActivity {
         b.putString("newTitle", cardTitleContent);
         openExercisePage.putExtras(b);
         startActivity(openExercisePage);
+        finish();
 
     }
 
