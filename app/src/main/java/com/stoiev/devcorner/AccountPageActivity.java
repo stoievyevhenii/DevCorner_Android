@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.pm.ShortcutManager;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
@@ -124,6 +125,8 @@ public class AccountPageActivity extends AppCompatActivity {
 
         Intent openMain = new Intent(this, MainActivity.class);
         startActivity(openMain);
+        // Remove all shortcuts
+        removeShortcuts();
         finish();
     }
 
@@ -152,10 +155,20 @@ public class AccountPageActivity extends AppCompatActivity {
         startActivity(openExercisePage);
     }
 
+    public void removeShortcuts(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            if (shortcutManager != null) {
+                shortcutManager.removeAllDynamicShortcuts();
+            }
+        }
+    }
+
     @Override
     public void onBackPressed(){
         Intent opeHomePage = new Intent(this, HomeActivity.class);
         startActivity(opeHomePage);
         finish();
     }
+
 }

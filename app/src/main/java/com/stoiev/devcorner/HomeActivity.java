@@ -2,7 +2,11 @@ package com.stoiev.devcorner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.graphics.Canvas;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -28,6 +33,7 @@ import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -51,8 +57,13 @@ public class HomeActivity extends AppCompatActivity {
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
                 "user_system_status").allowMainThreadQueries().build();
 
-        // --- Set layout --- //
+        // Set layout
         setUpRecyclerView("title");
+
+        // Shortcuts
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            checkShortcuts();
+        }
     }
 
 
@@ -134,7 +145,6 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     // Pages
     public void openPageForNewExercise(View view) {
         Intent addNewExercise = new Intent(this, NewExerciseActivity.class);
@@ -160,6 +170,38 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(openExercisePage);
         finish();
 
+    }
+
+    // Shortcuts
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    private void checkShortcuts(){
+        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+        assert shortcutManager != null;
+
+        // Get shortcuts list
+        List<ShortcutInfo> shortcutList = shortcutManager.getDynamicShortcuts();
+        int shortcutSize = shortcutList.size();
+
+        // Check shortcuts
+        if (shortcutSize == 0){
+            setShortcut();
+        }
+    }
+
+    private void setShortcut() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            Intent openNewExercisePage = new Intent(this, NewExerciseActivity.class);
+            openNewExercisePage.setAction(Intent.ACTION_VIEW);
+
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "NewExercise")
+                    .setShortLabel("Add exercise")
+                    .setLongLabel("Add exercise")
+                    .setIcon(Icon.createWithResource(getApplicationContext(), R.drawable.fab))
+                    .setIntent(openNewExercisePage)
+                    .build();
+            shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
+        }
     }
 
 }

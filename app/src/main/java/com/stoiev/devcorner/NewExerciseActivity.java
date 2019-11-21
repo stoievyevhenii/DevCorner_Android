@@ -191,6 +191,7 @@ public class NewExerciseActivity extends AppCompatActivity {
                     author = usr.login;
                 }
             } catch (Exception ignored) {
+
             }
 
 

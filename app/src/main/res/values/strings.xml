@@ -58,4 +58,9 @@
     <string name="username">username</string>
     <string name="card_language_divider">card_language_divider</string>
     <string name="language">Language</string>
+
+    <!-- Messages Preferences -->
+    <string name="compose_shortcut_short_label1">Add</string>
+    <string name="compose_shortcut_long_label1">Add exercise</string>
+    <string name="compose_disabled_message1">Add</string>
 </resources>

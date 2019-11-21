@@ -30,6 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         // Check user status in system
         checkUserStatus();
+
     }
 
     private void checkUserStatus() {
@@ -54,7 +55,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void openNextPage(String nextPage) {
         switch (nextPage) {
