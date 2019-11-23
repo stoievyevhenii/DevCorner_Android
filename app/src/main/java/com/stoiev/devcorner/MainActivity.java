@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.room.Room;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.helpers.Message;
 
@@ -28,7 +26,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
-    public static AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Init DB
         fragmentManager = getSupportFragmentManager();
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
 
     }
 
@@ -87,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                     Toast toast = Toast.makeText(context, text, duration);
                                                     toast.show();
-                                                    setUserStatus(view, fieldLoginData);
+                                                    setUserStatus(fieldLoginData);
                                                 }
                                             } else {
                                                 Log.d("CheckResult", "2");
@@ -115,15 +110,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(registerForm);
     }
 
-    public void setUserStatus(View view, String login) {
-
-        Intent sendData = new Intent(this, RoomActions.class);
-
-        Bundle b = new Bundle();
-        b.putString("user", login);
-        sendData.putExtras(b);
-
-        startActivity(sendData);
+    public void setUserStatus(String login) {
+        RoomActions.setUserStatus(login);
+        Intent openHomePage = new Intent(this, HomeActivity.class);
+        startActivity(openHomePage);
         finish();
     }
 }

@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.pm.ShortcutManager;
@@ -21,7 +20,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
@@ -29,7 +28,6 @@ import com.stoiev.devcorner.model.HomeListItem;
 import java.util.List;
 
 public class AccountPageActivity extends AppCompatActivity {
-    private static AppDatabase appDatabase;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference exerciseRef = db.collection("exercises");
     private CardExercisesAdapter adapter;
@@ -39,9 +37,6 @@ public class AccountPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_page);
 
-        // Init Room database
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
 
         // Init toolbar
         setUpToolbar();
@@ -116,11 +111,11 @@ public class AccountPageActivity extends AppCompatActivity {
     // -- end firebase rules
 
     public void logout(View view) {
-        List<User> users = appDatabase.userDao().getAll();
+        List<User> users = RoomActions.appDatabase.userDao().getAll();
 
         // Delete all users from Room
         for (User usr : users) {
-            appDatabase.userDao().delete(usr);
+            RoomActions.appDatabase.userDao().delete(usr);
         }
 
         Intent openMain = new Intent(this, MainActivity.class);
@@ -132,7 +127,7 @@ public class AccountPageActivity extends AppCompatActivity {
 
     public String setUsername() {
         String username = null;
-        List<User> users = appDatabase.userDao().getAll();
+        List<User> users = RoomActions.appDatabase.userDao().getAll();
         for (User usr : users) {
             username = usr.login;
         }

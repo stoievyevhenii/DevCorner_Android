@@ -17,14 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.room.Room;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.stoiev.devcorner.DB.AppDatabase;
 import com.stoiev.devcorner.DB.FirebaseActions;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class NewExerciseActivity extends AppCompatActivity {
-    private static AppDatabase appDatabase;
     public static String exerciseLanguage;
     List<String> tagList = new ArrayList<>();
     private int selectedChipText = 0;
@@ -44,10 +42,6 @@ public class NewExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_exercise);
         Toolbar toolbar = findViewById(R.id.newExerciseToolbar);
         setSupportActionBar(toolbar);
-
-        // Init Room DB
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
 
         // Back button action
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -182,7 +176,7 @@ public class NewExerciseActivity extends AppCompatActivity {
                 && !exerciseBodyText.isEmpty()
                 && selectedChipText > 0) {
             //Get author
-            List<User> users = appDatabase.userDao().getAll();
+            List<User> users = RoomActions.appDatabase.userDao().getAll();
             String author = null;
 
             // If Room does not have users

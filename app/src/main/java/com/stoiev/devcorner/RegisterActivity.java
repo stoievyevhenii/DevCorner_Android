@@ -40,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     Button regBtn;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static AppDatabase appDatabase;
     Map<String, Object> newUser = new HashMap<>();
 
     @Override
@@ -50,12 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         /////////////////////
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        // Init BD
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
-
-
 
         newUserLoginField = findViewById(R.id.registerLogin);
         newUserPasswordField = findViewById(R.id.registerPasswd);
@@ -137,13 +130,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void setUserStatus(String login){
-        Intent sendData = new Intent(this, RoomActions.class);
-
-        Bundle b = new Bundle();
-        b.putString("user", login);
-        sendData.putExtras(b);
-
-        startActivity(sendData);
+        RoomActions.setUserStatus(login);
+        Intent openHomePage = new Intent(this, HomeActivity.class);
+        startActivity(openHomePage);
         finish();
     }
 

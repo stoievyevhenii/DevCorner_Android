@@ -22,13 +22,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
@@ -37,8 +36,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-
-    private static AppDatabase appDatabase;
 
     // var for firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,10 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(toolbar);
-
-        // Init Room
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
 
         // Set layout
         setUpRecyclerView("title");
@@ -82,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         recycleView.setAdapter(adapter);
 
         // Delete item if user = admin
-        List<User> users = appDatabase.userDao().getAll();
+        List<User> users = RoomActions.appDatabase.userDao().getAll();
         for (User usr : users) {
             user = usr.login;
         }

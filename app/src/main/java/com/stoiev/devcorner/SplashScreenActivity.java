@@ -5,15 +5,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.room.Room;
 
-import com.stoiev.devcorner.DB.AppDatabase;
+import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 
 import java.util.List;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private static AppDatabase appDatabase;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -24,9 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
-                "user_system_status").allowMainThreadQueries().build();
+        RoomActions.initializeRoomDB(getApplicationContext());
 
         // Check user status in system
         checkUserStatus();
@@ -34,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void checkUserStatus() {
-        List<User> users = appDatabase.userDao().getAll();
+        List<User> users = RoomActions.appDatabase.userDao().getAll();
         int status = 0;
         int statusInSystem = 0;
 
