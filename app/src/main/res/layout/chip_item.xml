@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chip_item"
-    android:text="@string/language"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:text="@string/language"
+    app:chipBackgroundColor="@color/nonAccent"
+    android:textColor="@android:color/tertiary_text_dark"
+    app:chipIconVisible="false">
 
 </com.google.android.material.chip.Chip>

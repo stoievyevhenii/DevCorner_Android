@@ -91,6 +91,10 @@ public class ExercisePageActivity extends AppCompatActivity {
 
     }
 
+    public void backToHome(View view) {
+        onBackPressed();
+    }
+
     private class RecyclerAdapter extends RecyclerView.Adapter<ExercisePageActivity.RecyclerViewHolder> {
         private ArrayList<ExerciseLine> exercise_items = new ArrayList<>();
 

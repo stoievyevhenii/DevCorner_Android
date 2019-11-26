@@ -42,14 +42,13 @@ public class MainActivity extends AppCompatActivity {
     ///////////
 
     public void checkData(final View view) {
-
         // Login data
         EditText loginField = findViewById(R.id.login);
-        final String fieldLoginData = loginField.getText().toString().replace(" ", "");
+        final String fieldLoginData = loginField.getText().toString();
 
         // Passwd data
         EditText passwdField = findViewById(R.id.passwd);
-        final String fieldPasswdData = passwdField.getText().toString().replace(" ", "");
+        final String fieldPasswdData = passwdField.getText().toString();
 
         // Check data
         if (fieldPasswdData.isEmpty() || fieldLoginData.isEmpty()) {

@@ -25,25 +25,6 @@ public class ExerciseLine {
         linesDataList.add(new ExerciseLine(2, "Second_line"));
         linesDataList.add(new ExerciseLine(3, "Third_line"));
         linesDataList.add(new ExerciseLine(4, "Fourth_line"));
-        linesDataList.add(new ExerciseLine(1, "First_line"));
-        linesDataList.add(new ExerciseLine(2, "Second_line"));
-        linesDataList.add(new ExerciseLine(3, "Third_line"));
-        linesDataList.add(new ExerciseLine(4, "Fourth_line"));
-        linesDataList.add(new ExerciseLine(2, "Second_line"));
-        linesDataList.add(new ExerciseLine(3, "Third_line"));
-        linesDataList.add(new ExerciseLine(4, "Fourth_line"));
-        linesDataList.add(new ExerciseLine(1, "First_line"));
-        linesDataList.add(new ExerciseLine(2, "Second_line"));
-        linesDataList.add(new ExerciseLine(3, "Third_line"));
-        linesDataList.add(new ExerciseLine(4, "Fourth_line"));
-        linesDataList.add(new ExerciseLine(1, "First_line"));
-        linesDataList.add(new ExerciseLine(2, "Second_line"));
-        linesDataList.add(new ExerciseLine(3, "Third_line"));
-        linesDataList.add(new ExerciseLine(4, "Fourth_line"));
-        linesDataList.add(new ExerciseLine(1, "First_line"));
-        linesDataList.add(new ExerciseLine(2, "Second_line"));
-        linesDataList.add(new ExerciseLine(3, "Third_line"));
-        linesDataList.add(new ExerciseLine(4, "Fourth_line"));
 
 
         return linesDataList;

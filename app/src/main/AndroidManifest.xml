@@ -14,20 +14,20 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ResultActivity"
-            android:theme="@style/ResultPage"
-             />
+            android:theme="@style/ResultPage" />
         <activity android:name=".DB.RoomActions" />
-        <activity android:name=".AccountPageActivity"
-            android:theme="@style/AccountPage"
-            android:label="@string/menuAccount"/>
+        <activity
+            android:name=".AccountPageActivity"
+            android:label="@string/menuAccount"
+            android:theme="@style/AccountPage" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".RegisterActivity"

@@ -33,11 +33,11 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText newUserLoginField;
-    EditText newUserPasswordField;
-    String newUserLogin;
-    String newUserPassword;
-    Button regBtn;
+    private EditText newUserLoginField;
+    private EditText newUserPasswordField;
+    private String newUserLogin;
+    private String newUserPassword;
+    private Button regBtn;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> newUser = new HashMap<>();

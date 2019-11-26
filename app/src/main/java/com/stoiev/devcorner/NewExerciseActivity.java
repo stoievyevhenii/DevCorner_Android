@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,12 +35,24 @@ public class NewExerciseActivity extends AppCompatActivity {
     List<String> tagList = new ArrayList<>();
     private int selectedChipText = 0;
 
+    // Var for tab
+    private Toolbar toolbar;
+    //
+    private TextInputEditText exerciseTitle;
+    private Spinner exerciseGroup;
+    private TextInputEditText exerciseContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_exercise);
         Toolbar toolbar = findViewById(R.id.newExerciseToolbar);
         setSupportActionBar(toolbar);
+
+        exerciseTitle = findViewById(R.id.newExerciseTitle);
+        exerciseGroup = findViewById(R.id.newExerciseGroup);
+        exerciseContent = findViewById(R.id.newExerciseContent);
 
         // Back button action
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -56,7 +67,6 @@ public class NewExerciseActivity extends AppCompatActivity {
 
         // Initialize chip group
         setTag();
-
     }
 
 
@@ -129,18 +139,10 @@ public class NewExerciseActivity extends AppCompatActivity {
             chip.setCheckable(true);
 
             //Added click listener on close icon to remove tag from ChipGroup
-//            chip.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    exerciseLanguage = chip.getText().toString();
-//                }
-//            });
-
-            chip.setOnCheckedChangeListener(new Chip.OnCheckedChangeListener() {
+            chip.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.d("Chip", "onCheckedChanged");
-                    exerciseLanguage = "";
+                public void onClick(View v) {
+                    exerciseLanguage = chip.getText().toString();
                 }
             });
 
@@ -149,16 +151,10 @@ public class NewExerciseActivity extends AppCompatActivity {
         }
     }
 
-
     @SuppressLint("PrivateResource")
     public void uploadNewExercise(View view) {
         FirebaseActions uploadData = new FirebaseActions();
         String exerciseTitleText, exerciseGroupText, exerciseBodyText, selectableExerciseLanguage;
-
-        // Get all field
-        TextInputEditText exerciseTitle = findViewById(R.id.newExerciseTitle);
-        Spinner exerciseGroup = findViewById(R.id.newExerciseGroup);
-        TextInputEditText exerciseContent = findViewById(R.id.newExerciseContent);
 
         // Convert data from fields in String
         exerciseTitleText = Objects.requireNonNull(exerciseTitle.getText()).toString();
@@ -188,10 +184,9 @@ public class NewExerciseActivity extends AppCompatActivity {
 
             }
 
-
             // Send data in DB
             try {
-                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText, author, selectableExerciseLanguage);
+                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText ,author, selectableExerciseLanguage);
                 Bundle actionResult = new Bundle();
                 actionResult.putString("newTitle", "Thank you for your exercise!");
 
@@ -199,6 +194,7 @@ public class NewExerciseActivity extends AppCompatActivity {
                 openResultPage.putExtras(actionResult);
                 startActivity(openResultPage);
                 finish();
+
 
             } catch (Exception e) {
                 new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
@@ -220,4 +216,5 @@ public class NewExerciseActivity extends AppCompatActivity {
         startActivity(opeHomePage);
         finish();
     }
+
 }
