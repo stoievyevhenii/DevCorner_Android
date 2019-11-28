@@ -5,20 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:windowSoftInputMode="adjustResize"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/loginIcon"
-        android:layout_width="0dp"
+        android:layout_width="127dp"
         android:layout_height="0dp"
         android:layout_marginStart="142dp"
         android:layout_marginEnd="142dp"
+        android:contentDescription="@string/login_icon"
         app:layout_constraintBottom_toTopOf="@+id/loginField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/login"
-        android:contentDescription="@string/login_icon" />
+        app:srcCompat="@drawable/login" />
 
     <Button
         android:id="@+id/sign_in_btn"
@@ -26,7 +27,6 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/btn_style"
@@ -41,8 +41,7 @@
         app:layout_constraintBottom_toTopOf="@+id/createAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwdField" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/createAccount"
@@ -59,14 +58,14 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_btn" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@null"
@@ -74,10 +73,11 @@
         android:paddingBottom="8dp"
         android:textColorHint="@color/gray"
         app:hintAnimationEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/passwdField"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginIcon"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:passwordToggleTint="@color/colorAccent">
 
@@ -106,9 +106,8 @@
         android:id="@+id/passwdField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:textColorHint="@color/gray"

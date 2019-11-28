@@ -152,13 +152,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openExercisePage(View view) {
-        TextView cardTitle = view.findViewById(R.id.card_title);
-        String cardTitleContent = cardTitle.getText().toString();
 
         Intent openExercisePage = new Intent(this, ExercisePageActivity.class);
 
+        // Get exercise title
+        TextView cardTitle = view.findViewById(R.id.card_title);
+        String cardTitleContent = cardTitle.getText().toString();
+
+        // Get exercise author
+        TextView cardAuthor = view.findViewById(R.id.author);
+        String cardAuthorContent = cardAuthor.getText().toString();
+
+        // Send bundle data
         Bundle b = new Bundle();
         b.putString("newTitle", cardTitleContent);
+        b.putString("exerciseAuthor", cardAuthorContent);
+
         openExercisePage.putExtras(b);
         startActivity(openExercisePage);
         finish();

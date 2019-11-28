@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.stoiev.devcorner.helpers.TaskFormation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,9 +26,9 @@ import java.util.Objects;
 public class ExercisePageActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private FloatingActionButton fab;
     private LinearLayoutManager verticalLinearLayoutManager;
-    private LinearLayoutManager horizontalLinearLayoutManager;
+    String newTitle = "";
+    String exerciseAuthor = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,19 @@ public class ExercisePageActivity extends AppCompatActivity {
 
         // Set title text
         Bundle b = getIntent().getExtras();
-        String newTitle;
+
+
         if (b != null) {
             newTitle = b.getString("newTitle");
+            exerciseAuthor = b.getString("exerciseAuthor");
             TextView pageTitle = findViewById(R.id.exercisePageTitle);
             pageTitle.setText(newTitle);
         }
+
+        // Call exercise formation
+
+        TaskFormation callExerciseHelper = new TaskFormation();
+        callExerciseHelper.getExerciseData(exerciseAuthor, newTitle);
 
         // Set new layout
         setLayout();
@@ -83,11 +90,7 @@ public class ExercisePageActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(horizontalLinearLayoutManager);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recyclerView.setLayoutManager(verticalLinearLayoutManager);
-        }
+        recyclerView.setLayoutManager(verticalLinearLayoutManager);
 
     }
 
@@ -137,7 +140,7 @@ public class ExercisePageActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent opeHomePage = new Intent(this, HomeActivity.class);
         startActivity(opeHomePage);
         finish();
