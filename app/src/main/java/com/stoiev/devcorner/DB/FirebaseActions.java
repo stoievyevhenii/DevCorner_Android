@@ -1,23 +1,18 @@
 package com.stoiev.devcorner.DB;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.stoiev.devcorner.dao.FirebaseDAO;
-import com.stoiev.devcorner.helpers.Message;
+import com.stoiev.devcorner.helpers.TaskFormation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,29 +21,40 @@ public class FirebaseActions implements FirebaseDAO {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Map<String, Object> newUser = new HashMap<>();
     private Map<String, Object> newExercise = new HashMap<>();
+    private Map<String, Object> exerciseLines = new HashMap<>();
+
+    public FirebaseActions() {
+    }
 
     @Override
-    public void addExercise(String exerciseTitle, String exerciseGroup, String exerciseBody, String author, String exerciseLanguage) {
+    public void addExercise(String id, String exerciseTitle, String exerciseGroup, String exerciseBody, String author, String exerciseLanguage) {
+
+        newExercise.put("id", id);
         newExercise.put("title", exerciseTitle);
         newExercise.put("group", exerciseGroup);
         newExercise.put("body", exerciseBody);
         newExercise.put("author", author);
         newExercise.put("language", exerciseLanguage);
-        db.collection("exercises")
-                .add(newExercise).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+
+
+        db.collection("exercises").document(id)
+                .set(newExercise)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+        addDividedExerciseBody(id, exerciseBody);
+
     }
 
     @Override
     public void regNewUser(final String newUserLogin, final String newUserPassword) {
-
         CollectionReference docRef = db.collection("users");
         Query checkDataExists = docRef.whereEqualTo("login", newUserLogin);
 
@@ -59,6 +65,7 @@ public class FirebaseActions implements FirebaseDAO {
                 for (DocumentSnapshot ds : queryDocumentSnapshots) {
                     String login;
                     login = ds.getString("login");
+                    assert login != null;
                     if (login.equals(newUserLogin)) {
                         Log.d("RegResult", "User already exists");
                         isExisting = true;
@@ -90,21 +97,26 @@ public class FirebaseActions implements FirebaseDAO {
     }
 
     @Override
-    public void getAllExercise() {
-        db.collection("exercises")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Firebase", document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d("Firebase", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
+    public void addDividedExerciseBody(String id, String body) {
 
+        TaskFormation exercise = new TaskFormation();
+        String[] codeLines = exercise.taskFormatting(body);
+
+        exerciseLines.put("exerciseID", id);
+        for (int i = 0; i < codeLines.length; i++) {
+            exerciseLines.put("line " + i, codeLines[i]);
+        }
+
+        db.collection("dividedExercises").document(id)
+                .set(exerciseLines)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
 }

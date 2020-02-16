@@ -32,7 +32,7 @@ import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
 import com.stoiev.devcorner.model.HomeListItem;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
             user = usr.login;
         }
 
+        assert user != null;
         if (user.equals("admin")) {
             new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                 @Override
@@ -93,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onChildDraw(Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                     new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                             .addBackgroundColor(ContextCompat.getColor(HomeActivity.this, R.color.red))
                             .addActionIcon(R.drawable.delete_outline)
@@ -159,14 +160,14 @@ public class HomeActivity extends AppCompatActivity {
         TextView cardTitle = view.findViewById(R.id.card_title);
         String cardTitleContent = cardTitle.getText().toString();
 
-        // Get exercise author
-        TextView cardAuthor = view.findViewById(R.id.author);
-        String cardAuthorContent = cardAuthor.getText().toString();
+        // Get card ID
+        TextView cardID = view.findViewById(R.id.document_ID);
+        String id = cardID.getText().toString();
 
         // Send bundle data
         Bundle b = new Bundle();
         b.putString("newTitle", cardTitleContent);
-        b.putString("exerciseAuthor", cardAuthorContent);
+        b.putString("id", id);
 
         openExercisePage.putExtras(b);
         startActivity(openExercisePage);
@@ -202,7 +203,8 @@ public class HomeActivity extends AppCompatActivity {
                     .setIcon(Icon.createWithResource(getApplicationContext(), R.drawable.fab))
                     .setIntent(openNewExercisePage)
                     .build();
-            shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
+            assert shortcutManager != null;
+            shortcutManager.setDynamicShortcuts(Collections.singletonList(shortcut));
         }
     }
 

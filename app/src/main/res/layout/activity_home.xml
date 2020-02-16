@@ -37,11 +37,10 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimaryDark"
-        app:fabAlignmentMode="center"
+        app:fabAlignmentMode="end"
         app:fabAnimationMode="scale"
         app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:navigationIcon="@drawable/menu" />
+        app:layout_scrollFlags="scroll|enterAlways" />
 
     <Button
         android:id="@+id/button2"

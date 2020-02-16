@@ -1,21 +1,18 @@
 package com.stoiev.devcorner;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.stoiev.devcorner.helpers.TaskFormation;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +25,8 @@ public class ExercisePageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager verticalLinearLayoutManager;
     String newTitle = "";
-    String exerciseAuthor = "";
+    String id = "";
+    ExerciseLine exerciseLine = new ExerciseLine();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +36,22 @@ public class ExercisePageActivity extends AppCompatActivity {
         // Set title text
         Bundle b = getIntent().getExtras();
 
-
         if (b != null) {
             newTitle = b.getString("newTitle");
-            exerciseAuthor = b.getString("exerciseAuthor");
+            id = b.getString("id");
             TextView pageTitle = findViewById(R.id.exercisePageTitle);
             pageTitle.setText(newTitle);
         }
 
-        // Call exercise formation
+        getData();
 
-        TaskFormation callExerciseHelper = new TaskFormation();
-        callExerciseHelper.getExerciseData(exerciseAuthor, newTitle);
-
-        // Set new layout
         setLayout();
 
-        // Drag and drop
         dragAndDrop();
+    }
+
+    private void getData(){
+        exerciseLine.getBodyFromDB(id);
     }
 
     private void setLayout() {
@@ -65,17 +61,16 @@ public class ExercisePageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
         final RecyclerAdapter exercise_adapter = new RecyclerAdapter();
         recyclerView.setAdapter(exercise_adapter);
-        exercise_adapter.addAll(ExerciseLine.getExerciseLines());
+        exercise_adapter.addAll(exerciseLine.getExerciseLines());
     }
 
     private void dragAndDrop() {
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
-
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
-                Collections.swap(ExerciseLine.getExerciseLines(), position_dragged, position_target);
+                Collections.swap(exerciseLine.getExerciseLines(), position_dragged, position_target);
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(position_dragged, position_target);
                 return false;
             }
@@ -92,10 +87,6 @@ public class ExercisePageActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
 
-    }
-
-    public void backToHome(View view) {
-        onBackPressed();
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<ExercisePageActivity.RecyclerViewHolder> {
@@ -137,6 +128,11 @@ public class ExercisePageActivity extends AppCompatActivity {
         void bind(ExerciseLine linesItem) {
             title.setText(linesItem.getLine());
         }
+    }
+
+
+    public void backToHome(View view) {
+        onBackPressed();
     }
 
     @Override

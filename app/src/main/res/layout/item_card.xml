@@ -23,6 +23,14 @@
         android:background="@drawable/card_style"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/document_ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/card_content"
             android:layout_width="match_parent"

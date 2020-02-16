@@ -3,7 +3,6 @@ package com.stoiev.devcorner;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,11 +28,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class NewExerciseActivity extends AppCompatActivity {
     public static String exerciseLanguage;
-    List<String> tagList = new ArrayList<>();
+    private static List<String> tagList = new ArrayList<>();
     private int selectedChipText = 0;
+    private FirebaseActions DBData = new FirebaseActions();
+    private static ArrayList<Integer> itemsForID;
 
     // Var for tab
     private Toolbar toolbar;
@@ -66,6 +68,7 @@ public class NewExerciseActivity extends AppCompatActivity {
         initSpinner();
 
         // Initialize chip group
+        addAvailableLanguages();
         setTag();
     }
 
@@ -123,14 +126,15 @@ public class NewExerciseActivity extends AppCompatActivity {
         });
     }
 
+    private void addAvailableLanguages() {
+        String[] languageList = {"Java", "Kotlin", "JS", "C++", "C#", ".Net"};
+        tagList.addAll(Arrays.asList(languageList));
+    }
+
     // Init chip group
     private void setTag() {
+
         final ChipGroup chipGroup = findViewById(R.id.languages_chip_group);
-        tagList.add("Java");
-        tagList.add("Kotlin");
-        tagList.add("C++");
-        tagList.add("Python");
-        tagList.add("JavaScript");
 
         for (int index = 0; index < tagList.size(); index++) {
             final String tagName = tagList.get(index);
@@ -146,14 +150,13 @@ public class NewExerciseActivity extends AppCompatActivity {
                 }
             });
 
-            Log.d("Chip", "Chip vale = " + exerciseLanguage);
             chipGroup.addView(chip);
         }
     }
 
     @SuppressLint("PrivateResource")
-    public void uploadNewExercise(View view) {
-        FirebaseActions uploadData = new FirebaseActions();
+    public void checkFieldsAndUploadNewExercise(View view) {
+
         String exerciseTitleText, exerciseGroupText, exerciseBodyText, selectableExerciseLanguage;
 
         // Convert data from fields in String
@@ -184,17 +187,11 @@ public class NewExerciseActivity extends AppCompatActivity {
 
             }
 
-            // Send data in DB
             try {
-                uploadData.addExercise(exerciseTitleText, exerciseGroupText, exerciseBodyText ,author, selectableExerciseLanguage);
-                Bundle actionResult = new Bundle();
-                actionResult.putString("newTitle", "Thank you for your exercise!");
-
-                Intent openResultPage = new Intent(this, ResultActivity.class);
-                openResultPage.putExtras(actionResult);
-                startActivity(openResultPage);
-                finish();
-
+                Boolean addResult;
+                String id = generateUniqId();
+                DBData.addExercise(id, exerciseTitleText, exerciseGroupText, exerciseBodyText, author, selectableExerciseLanguage);
+                openResultPage();
 
             } catch (Exception e) {
                 new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Centered)
@@ -210,8 +207,22 @@ public class NewExerciseActivity extends AppCompatActivity {
         }
     }
 
+
+    private String generateUniqId() {
+        return UUID.randomUUID().toString();
+    }
+
+    public void openResultPage() {
+        Bundle actionResult = new Bundle();
+        actionResult.putString("newTitle", "Thank you for your exercise!");
+        Intent openResultPage = new Intent(this, ResultActivity.class);
+        openResultPage.putExtras(actionResult);
+        startActivity(openResultPage);
+        finish();
+    }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent opeHomePage = new Intent(this, HomeActivity.class);
         startActivity(opeHomePage);
         finish();
