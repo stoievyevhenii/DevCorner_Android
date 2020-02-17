@@ -1,5 +1,12 @@
 package com.stoiev.devcorner;
 
+import android.content.Intent;
+import android.content.pm.ShortcutManager;
+import android.graphics.Canvas;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,14 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.pm.ShortcutManager;
-import android.graphics.Canvas;
-import android.os.Bundle;
-import android.view.View;
-
-import android.widget.TextView;
-
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +22,7 @@ import com.google.firebase.firestore.Query;
 import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
+import com.stoiev.devcorner.helpers.ThemeChanger;
 import com.stoiev.devcorner.model.HomeListItem;
 
 import java.util.List;
@@ -37,12 +37,14 @@ public class AccountPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_page);
 
-
         // Init toolbar
         setUpToolbar();
 
         setUpRecyclerView("author");
         setUsername();
+
+        final View activityRootView = findViewById(R.id.accountPage);
+        ThemeChanger.setTheme(activityRootView, "NAVIGATION_BAR");
     }
 
 
@@ -71,7 +73,7 @@ public class AccountPageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildDraw(Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addBackgroundColor(ContextCompat.getColor(AccountPageActivity.this, R.color.red))
                         .addActionIcon(R.drawable.delete_outline)
@@ -88,12 +90,7 @@ public class AccountPageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Toolbar back button
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     //  -- Firebase rules
@@ -138,7 +135,7 @@ public class AccountPageActivity extends AppCompatActivity {
         return username;
     }
 
-    public void openExercisePage(View view){
+    public void openExercisePage(View view) {
         TextView cardTitle = view.findViewById(R.id.card_title);
         String cardTitleContent = cardTitle.getText().toString();
 
@@ -150,7 +147,7 @@ public class AccountPageActivity extends AppCompatActivity {
         startActivity(openExercisePage);
     }
 
-    public void removeShortcuts(){
+    private void removeShortcuts() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
             if (shortcutManager != null) {
@@ -160,7 +157,7 @@ public class AccountPageActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent opeHomePage = new Intent(this, HomeActivity.class);
         startActivity(opeHomePage);
         finish();

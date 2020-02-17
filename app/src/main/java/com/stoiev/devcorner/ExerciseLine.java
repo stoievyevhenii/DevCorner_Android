@@ -1,13 +1,9 @@
 package com.stoiev.devcorner;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.stoiev.devcorner.model.Exercise;
 
@@ -18,13 +14,14 @@ public class ExerciseLine {
     private String line;
     public String id;
     public static String title;
-    private String exerciseCardID;
+    private static String exerciseCardID;
 
     private static Exercise exercise = new Exercise();
 
     private static ArrayList<ExerciseLine> linesDataList = new ArrayList<>();
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    @SuppressLint("StaticFieldLeak")
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ExerciseLine() {
     }
@@ -37,7 +34,7 @@ public class ExerciseLine {
         return line;
     }
 
-    void getBodyFromDB(String cardID) {
+    static void initDocumentID(String cardID) {
 //        db.collection("exercises")
 //                .whereEqualTo("id", cardID)
 //                .get()
@@ -63,34 +60,33 @@ public class ExerciseLine {
         exerciseCardID = cardID;
     }
 
-    ArrayList<ExerciseLine> getExerciseLines() {
+    static ArrayList<ExerciseLine> getExerciseLines() {
         DocumentReference docRef = db.collection("exercises").document(exerciseCardID);
         linesDataList.clear();
         docRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        exercise = documentSnapshot.toObject(Exercise.class);
-                        assert exercise != null;
-                        String exerciseBody = exercise.getBody();
-                        addItem(exerciseBody);
-                    }
+                .addOnSuccessListener(documentSnapshot -> {
+                    exercise = documentSnapshot.toObject(Exercise.class);
+
+                    assert exercise != null;
+                    String exerciseBody = exercise.getBody();
+                    addItem(exerciseBody);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("ErrorText", "Error");
-                    }
-                });
+                .addOnFailureListener(e -> Log.d("ErrorText", "Error"));
+
+        linesDataList.add(new ExerciseLine("First_line"));
+        linesDataList.add(new ExerciseLine("Second_line"));
+        linesDataList.add(new ExerciseLine("Third_line"));
+        linesDataList.add(new ExerciseLine("Fourth_line"));
+
         return linesDataList;
     }
 
-    private void addItem(String body) {
+    private static void addItem(String body) {
         Log.d("BodyText", "Body = " + exercise.getBodyList());
         linesDataList.add(new ExerciseLine(body));
     }
 
-    public void cleanData() {
+    void cleanData() {
         linesDataList.clear();
     }
 

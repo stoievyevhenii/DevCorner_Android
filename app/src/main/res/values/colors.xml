@@ -9,4 +9,9 @@
     <color name="gray">#A9A9A9</color>
     <color name="red">#F40C43</color>
 
+    <color name="adaptiveGray">?attr/colorButtonNormal</color>
+    <color name="cardBackground">?attr/colorBackgroundFloating</color>
+    <color name="adaptiveText">?android:attr/textColorPrimary</color>
+
+
 </resources>

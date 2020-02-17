@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.stoiev.devcorner.DB.FirebaseActions;
 import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.helpers.Message;
+import com.stoiev.devcorner.helpers.ThemeChanger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +26,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText newUserPasswordField;
     private String newUserLogin;
     private String newUserPassword;
+
     private Button regBtn;
+    private ConstraintLayout constraintLayout;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> newUser = new HashMap<>();
@@ -41,13 +46,25 @@ public class RegisterActivity extends AppCompatActivity {
 
         regBtn = findViewById(R.id.reg_btn);
 
-        regBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newUserLogin = newUserLoginField.getText().toString();
-                newUserPassword = newUserPasswordField.getText().toString();
-                regNewUser(newUserLogin, newUserPassword);
-            }
+        regBtn.setOnClickListener(view -> {
+            newUserLogin = newUserLoginField.getText().toString();
+            newUserPassword = newUserPasswordField.getText().toString();
+            regNewUser(newUserLogin, newUserPassword);
+        });
+
+        final View activityRootView = findViewById(R.id.registerPage);
+        ThemeChanger.setTheme(activityRootView, "BOTH");
+
+        constraintLayout = findViewById(R.id.registerPage);
+        constraintLayout.post(() -> {
+            int height = constraintLayout.getHeight();
+            constraintLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                if ((bottom - top) == height) {
+                    hideElementsWheKeyboardIsActive("visible");
+                } else {
+                    hideElementsWheKeyboardIsActive("gone");
+                }
+            });
         });
 
     }
@@ -64,6 +81,20 @@ public class RegisterActivity extends AppCompatActivity {
 
             setUserStatusAndRedirectToHome(newUserLogin);
         }
+    }
+
+    private void hideElementsWheKeyboardIsActive(String visibility){
+        ImageView logInIcon = findViewById(R.id.signin_icon);
+
+        switch(visibility){
+            case "gone":
+                logInIcon.setVisibility(View.GONE);
+                break;
+            case "visible":
+                logInIcon.setVisibility(View.VISIBLE);
+                break;
+        }
+
     }
 
     public void setUserStatusAndRedirectToHome(String login) {

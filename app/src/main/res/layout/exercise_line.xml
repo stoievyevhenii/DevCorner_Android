@@ -8,7 +8,6 @@
     android:layout_alignParentBottom="true"
     android:animateLayoutChanges="true"
     android:background="@drawable/card_style"
-    android:clickable="true"
     android:focusable="auto"
     android:foreground="?attr/selectableItemBackground"
     card_view:cardCornerRadius="0dp"
@@ -43,7 +42,7 @@
             android:paddingEnd="16dp"
             android:paddingBottom="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@android:color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             tools:text="Author name will be here" />
 

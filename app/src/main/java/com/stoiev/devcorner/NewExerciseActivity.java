@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.stoiev.devcorner.DB.FirebaseActions;
 import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
+import com.stoiev.devcorner.helpers.ThemeChanger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,12 +58,7 @@ public class NewExerciseActivity extends AppCompatActivity {
         exerciseContent = findViewById(R.id.newExerciseContent);
 
         // Back button action
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         // Initialize spinner data
         initSpinner();
@@ -70,6 +66,9 @@ public class NewExerciseActivity extends AppCompatActivity {
         // Initialize chip group
         addAvailableLanguages();
         setTag();
+
+        final View activityRootView = findViewById(R.id.newExercisePage);
+        ThemeChanger.setTheme(activityRootView, "NAVIGATION_BAR");
     }
 
 
@@ -92,8 +91,6 @@ public class NewExerciseActivity extends AppCompatActivity {
                 this, R.layout.spinner_item, groupsList) {
             @Override
             public boolean isEnabled(int position) {
-                // Disable the first item from Spinner
-                // First item will be use for hint
                 return position != 0;
             }
 
@@ -102,11 +99,12 @@ public class NewExerciseActivity extends AppCompatActivity {
                                         @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
+
                 if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                } else
-                    tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
+                }
+
                 return view;
             }
         };
@@ -143,12 +141,7 @@ public class NewExerciseActivity extends AppCompatActivity {
             chip.setCheckable(true);
 
             //Added click listener on close icon to remove tag from ChipGroup
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    exerciseLanguage = chip.getText().toString();
-                }
-            });
+            chip.setOnClickListener(v -> exerciseLanguage = chip.getText().toString());
 
             chipGroup.addView(chip);
         }
@@ -206,7 +199,6 @@ public class NewExerciseActivity extends AppCompatActivity {
                     .show();
         }
     }
-
 
     private String generateUniqId() {
         return UUID.randomUUID().toString();

@@ -1,7 +1,9 @@
 package com.stoiev.devcorner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.stoiev.devcorner.helpers.ThemeChanger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +30,6 @@ public class ExercisePageActivity extends AppCompatActivity {
     private LinearLayoutManager verticalLinearLayoutManager;
     String newTitle = "";
     String id = "";
-    ExerciseLine exerciseLine = new ExerciseLine();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +46,19 @@ public class ExercisePageActivity extends AppCompatActivity {
             pageTitle.setText(newTitle);
         }
 
+        final View activityRootView = findViewById(R.id.exerciseLayout);
+        ThemeChanger.setTheme(activityRootView, "BOTH");
+
         getData();
 
         setLayout();
 
         dragAndDrop();
+
     }
 
     private void getData(){
-        exerciseLine.getBodyFromDB(id);
+        ExerciseLine.initDocumentID(id);
     }
 
     private void setLayout() {
@@ -61,7 +68,7 @@ public class ExercisePageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
         final RecyclerAdapter exercise_adapter = new RecyclerAdapter();
         recyclerView.setAdapter(exercise_adapter);
-        exercise_adapter.addAll(exerciseLine.getExerciseLines());
+        exercise_adapter.addAll(ExerciseLine.getExerciseLines());
     }
 
     private void dragAndDrop() {
@@ -70,7 +77,7 @@ public class ExercisePageActivity extends AppCompatActivity {
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
                 int position_dragged = dragged.getAdapterPosition();
                 int position_target = target.getAdapterPosition();
-                Collections.swap(exerciseLine.getExerciseLines(), position_dragged, position_target);
+                Collections.swap(ExerciseLine.getExerciseLines(), position_dragged, position_target);
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(position_dragged, position_target);
                 return false;
             }
@@ -130,8 +137,33 @@ public class ExercisePageActivity extends AppCompatActivity {
         }
     }
 
+    public void checkCurrentTheme(View view) {
+        int currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+            stylesForLightMode(view);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                stylesForNavigationBar(view);
+            }
+        }
+    }
+
+    private void stylesForLightMode(View view){
+        int flags = view.getSystemUiVisibility();
+        flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        view.setSystemUiVisibility(flags);
+    }
+
+    @SuppressLint("InlinedApi")
+    private void stylesForNavigationBar(View view){
+        int flags = view.getSystemUiVisibility();
+        flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        view.setSystemUiVisibility(flags);
+    }
 
     public void backToHome(View view) {
+        ExerciseLine exerciseLine = new ExerciseLine();
+        exerciseLine.cleanData();
         onBackPressed();
     }
 
@@ -143,5 +175,7 @@ public class ExercisePageActivity extends AppCompatActivity {
     }
 
 }
+
+
 
 

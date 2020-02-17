@@ -30,6 +30,7 @@ import com.google.firebase.firestore.Query;
 import com.stoiev.devcorner.DB.RoomActions;
 import com.stoiev.devcorner.entity.User;
 import com.stoiev.devcorner.helpers.RecyclerViewSwipeDecorator;
+import com.stoiev.devcorner.helpers.ThemeChanger;
 import com.stoiev.devcorner.model.HomeListItem;
 
 import java.util.Collections;
@@ -57,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             checkShortcuts();
         }
+
+        final View activityRootView = findViewById(R.id.homePageActivity);
+        ThemeChanger.setTheme(activityRootView, "STATUS_BAR");
     }
 
 

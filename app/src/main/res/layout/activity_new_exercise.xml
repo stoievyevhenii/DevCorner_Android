@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newExercisePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="?attr/colorBackgroundFloating"
     android:fitsSystemWindows="true"
     tools:context=".NewExerciseActivity">
 
@@ -50,6 +51,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/spinner_style"
             android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/chipScroll"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,11 +144,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:elegantTextHeight="false"
-                android:gravity="top"
+                android:elegantTextHeight="true"
                 android:hint="@string/newExerciseContentHint"
                 android:inputType="textMultiLine"
                 android:selectAllOnFocus="false"
+                android:singleLine="false"
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>

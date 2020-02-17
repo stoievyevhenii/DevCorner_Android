@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/LoginPage" />
+            android:theme="@style/LoginPage"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ExercisePageActivity"
             android:theme="@style/ExercisePage" />
@@ -46,7 +47,8 @@
             android:theme="@style/HomePage" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/LoginPage" />
+            android:theme="@style/LoginPage"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

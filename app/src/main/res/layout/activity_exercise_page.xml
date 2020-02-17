@@ -5,7 +5,7 @@
     android:id="@+id/exerciseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="?attr/colorBackgroundFloating"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ExercisePageActivity">
@@ -31,7 +31,8 @@
             app:layout_constraintEnd_toStartOf="@+id/exercisePageTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back_icon" />
+            app:srcCompat="@drawable/back_icon"
+            android:contentDescription="@string/back_icon" />
 
         <TextView
             android:id="@+id/exercisePageTitle"
@@ -42,13 +43,14 @@
             android:paddingRight="16dp"
             android:paddingBottom="24dp"
             android:text="@string/attachment_title"
-            android:textColor="@android:color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Button
             android:id="@+id/button"
@@ -73,7 +75,7 @@
         android:id="@+id/exercise_lines"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/nonAccent"
+        android:background="?attr/colorButtonNormal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

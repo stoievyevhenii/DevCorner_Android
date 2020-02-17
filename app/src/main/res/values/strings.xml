@@ -69,4 +69,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reorder">reorder</string>
+    <string name="register_icon">Register icon</string>
+    <string name="back_icon">Back icon</string>
 </resources>
